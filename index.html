@@ -20,21 +20,22 @@
 
     <!-- Criação de Quiz -->
 
-    <!-- Info básica do Quiz -->
-    <!-- <div class="header">BuzzQuizz</div> -->
+    <!-- Inicio Info básica do Quiz -->
     <div class="basic-info">
       <div class="info-title">Comece pelo começo</div>
       <div class="info">
-        <input type="text" placeholder="Título do seu quizz">
-        <input type="text" placeholder="URL da imagem do seu quizz">
-        <input type="text" placeholder="Quantidade de perguntas do quizz">
-        <input type="text" placeholder="Quantidade de níveis do quizz">
+        <input type="text" class="basic-info-title" placeholder="Título do seu quizz" />
+        <input type="text" class="basic-info-image" placeholder="URL da imagem do seu quizz" />
+        <input type="text" class="basic-info-questions" placeholder="Quantidade de perguntas do quizz" />
+        <input type="text" class="basic-info-questions-level" placeholder="Quantidade de níveis do quizz" />
       </div>
-      <div class="info-button">
+      <div class="info-button" onclick="sendBasicInfo()">
         <button>Prosseguir pra criar perguntas</button>
       </div>
     </div>
+    <!-- Fim da Info básica do Quiz -->
 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script
       type="module"
       src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"
