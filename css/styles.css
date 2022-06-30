@@ -278,12 +278,15 @@ body {
   justify-content: start;
 }
 
-.test-quizz {
-  background-color: #ec362d;
+.quizz {
   border-radius: 5px;
   width: 340px;
   height: 181px;
   margin: 10px 15px 12px 0px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 }
 
 .all-quizzes {
@@ -306,6 +309,32 @@ body {
   display: flex;
   align-items: center;
 }
+
+.quizz-image{
+    position: absolute;
+    width: 340px;
+    height: 181px;
+    border-radius: 5px;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.quizz p{
+    width: 309px;
+    height: 54px;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 22px;
+    color: #FFFFFF;
+    margin-left: 18px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    word-break: break-word;
+}
+
 
 @media (max-width: 1100px) {
   .user-none-quizzes {

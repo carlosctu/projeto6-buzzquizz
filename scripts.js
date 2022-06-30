@@ -114,5 +114,20 @@ Aí a partir daqui sou eu com o display e listagem, e antes seria você com a cr
 */
 
 /* eu aqui */
+
 /* Tela 1 Lista de Quizzes */
+
+
+let promisseGetQuizzes = axios.get('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes');
+promisseGetQuizzes.then(displayAllQuizzes);
+
+function displayAllQuizzes(answer){
+  let quizzes = answer.data;
+  let displayLists = document.querySelector('.all-quizzes-list');
+  for(let i = 0; i<quizzes.length; i++){
+    displayLists.innerHTML+=`
+    <div class="quizz"><img src="${quizzes[i].image}" class="quizz-image"><p>${quizzes[i].title}</p></div>
+    `;
+  }
+}
 
