@@ -9,6 +9,7 @@ body {
   width: 100%;
   background-color: rgba(229, 229, 229, 0.4);
 }
+
 .basic-info {
   width: 100%;
   height: 100%;
@@ -18,6 +19,7 @@ body {
   justify-content: center;
   /* background-color: #E5E5E5; */
 }
+
 .info-title {
   width: 195px;
   height: 23px;
@@ -28,6 +30,7 @@ body {
   font-size: 20px;
   font-weight: 700;
 }
+
 .info {
   width: 100%;
   height: 256px;
@@ -39,6 +42,7 @@ body {
   padding: 21px 0 15px 0;
   margin-bottom: 29px;
 }
+
 .info input {
   width: 75%;
   height: 46px;
@@ -50,13 +54,16 @@ body {
   border: 1px solid #d1d1d1;
   border-radius: 5px;
 }
+
 .info input::placeholder {
   font-style: italic;
   color: #bababa;
 }
+
 .info-button {
   width: 75%;
 }
+
 .info-button button {
   width: 100%;
   height: 54px;
@@ -78,6 +85,7 @@ body {
   align-items: center;
   justify-content: center;
 }
+
 .quiz-title {
   width: 195px;
   height: 23px;
@@ -88,9 +96,11 @@ body {
   font-size: 20px;
   font-weight: 700;
 }
+
 .questions {
   width: 375px;
 }
+
 .question-info {
   width: 100%;
   display: flex;
@@ -99,6 +109,7 @@ body {
   justify-content: center;
   background-color: #ffffff;
 }
+
 .question,
 .question-right-answer,
 .question-wrong-answer {
@@ -108,15 +119,17 @@ body {
   align-items: center;
   justify-content: center;
 }
-.question > div,
-.question-right-answer > div,
-.question-wrong-answer > div {
-  width: 85%;
+
+.question>div,
+.question-right-answer>div,
+.question-wrong-answer>div {
+  width: 341px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
+
 .question-info input {
   width: 100%;
   height: 46px;
@@ -128,10 +141,12 @@ body {
   border: 1px solid #d1d1d1;
   border-radius: 5px;
 }
+
 .question-info input::placeholder {
   font-style: italic;
   color: #bababa;
 }
+
 .questions span {
   width: 90%;
   display: block;
@@ -139,10 +154,12 @@ body {
   line-height: 23px;
   font-weight: 700;
 }
+
 .question-info span {
   padding-top: 15px;
   padding-bottom: 12px;
 }
+
 .question-label {
   width: 100%;
   height: 74px;
@@ -155,22 +172,174 @@ body {
   line-height: 23px;
   font-weight: 700;
 }
+
 .question-label span {
   margin-left: 17px;
 }
+
 .question-label button {
   border: none;
   background: transparent;
   outline: none;
 }
+
 .question-label ion-icon {
   width: 26px;
   height: 23px;
   margin-right: 17px;
 }
-.question-wrong-answer > div {
+
+.question-wrong-answer>div {
   margin-bottom: 18px;
 }
+
+/* Tela 3.3 - Níveis do Quiz */
+.quiz-levels {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.levels-title {
+  width: 100%;
+  height: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 106px 0 29px 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.levels {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.levels>div {
+  width: 375px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.levels-info {
+  width: 100%;
+  display: flex;
+  margin-top: 22px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+}
+
+.levels-info .level div {
+  width: 100%;
+  /* display: flex; */
+  flex-direction: column;
+}
+
+.levels-info input,
+.levels-info .desc {
+  display: flex;
+  width: 341px;
+  height: 46px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  margin-bottom: 14px;
+  border: 1px solid #d1d1d1;
+  border-radius: 5px;
+}
+
+.levels-info input::placeholder,
+.levels-info textarea::placeholder {
+  padding-left: 14px;
+  font-style: italic;
+  color: #bababa;
+}
+
+.levels-info .desc {
+  font-family: "Roboto", sans-serif;
+  height: inherit;
+}
+
+.levels span {
+  width: 90%;
+  display: block;
+  font-size: 16px;
+  line-height: 23px;
+  font-weight: 700;
+}
+
+.levels-info span {
+  padding-top: 15px;
+  padding-bottom: 12px;
+}
+
+.levels .levels-label {
+  width: 100%;
+  height: 74px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+}
+
+.levels-label span {
+  width: 100%;
+  margin-left: 17px;
+}
+
+.levels-label button {
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+.levels-label ion-icon {
+  width: 26px;
+  height: 23px;
+  margin-right: 17px;
+}
+
+.levels-button {
+  width: 75%;
+  margin-top: 28px;
+}
+
+.levels-button button {
+  width: 100%;
+  height: 54px;
+  background-color: #ec362d;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  border-radius: 15px;
+  border: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .hidden {
   display: none;
