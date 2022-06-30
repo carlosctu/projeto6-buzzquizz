@@ -107,7 +107,6 @@ body {
 .questions {
   width: 375px;
 }
-
 .question-info {
   width: 100%;
   display: flex;
@@ -116,7 +115,6 @@ body {
   justify-content: center;
   background-color: #ffffff;
 }
-
 .question,
 .question-right-answer,
 .question-wrong-answer {
@@ -187,10 +185,11 @@ body {
   height: 23px;
   margin-right: 17px;
 }
-
 .question-wrong-answer > div {
   margin-bottom: 18px;
 }
+
+
 
 .hidden {
   display: none;
