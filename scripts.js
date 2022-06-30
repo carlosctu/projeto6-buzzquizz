@@ -89,7 +89,6 @@ function sendBasicInfo() {
     console.log("Deu um erro no envio dos dados de Info Basicas")
   );
 }
-
 // Tela 3.2 - Perguntas do Quiz
 
 
