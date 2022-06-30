@@ -19,9 +19,10 @@ body {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-/* Info básica do Quizz */
+/* Tela 3.1 - Info básica do Quiz */
 body {
   /* background-color: #E5E5E5; */
+  width: 100%;
   background-color: rgba(229, 229, 229, 0.4);
 }
 .basic-info {
@@ -83,9 +84,117 @@ body {
   border-radius: 15px;
   border: none;
 }
-/*--------------------------------------------------------------------*/
 
+/* Tela 3.2 - Perguntas do Quiz */
+.quiz-questions {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.quiz-title {
+  width: 195px;
+  height: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 106px 0 29px 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+.questions {
+  width: 375px;
+}
 
+.question-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+}
+
+.question,
+.question-right-answer,
+.question-wrong-answer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.question > div,
+.question-right-answer > div,
+.question-wrong-answer > div {
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.question-info input {
+  width: 100%;
+  height: 46px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  margin-bottom: 14px;
+  padding-left: 14px;
+  border: 1px solid #d1d1d1;
+  border-radius: 5px;
+}
+.question-info input::placeholder {
+  font-style: italic;
+  color: #bababa;
+}
+.questions span {
+  width: 90%;
+  display: block;
+  font-size: 16px;
+  line-height: 23px;
+  font-weight: 700;
+}
+.question-info span {
+  padding-top: 15px;
+  padding-bottom: 12px;
+}
+
+.question-label {
+  width: 100%;
+  height: 74px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  font-size: 18px;
+  line-height: 23px;
+  font-weight: 700;
+}
+.question-label span {
+  margin-left: 17px;
+}
+.question-label button {
+  border: none;
+  background: transparent;
+  outline: none;
+}
+.question-label ion-icon {
+  width: 26px;
+  height: 23px;
+  margin-right: 17px;
+}
+
+.question-wrong-answer > div {
+  margin-bottom: 18px;
+}
+
+.hidden {
+  display: none;
+}
 
 @media (max-width: 1100px) {
 }

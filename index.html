@@ -20,8 +20,8 @@
 
     <!-- Criação de Quiz -->
 
-    <!-- Inicio Info básica do Quiz -->
-    <div class="basic-info">
+    <!-- Tela 3.1 - Info básica do Quiz -->
+    <!-- <div class="basic-info">
       <div class="info-title">Comece pelo começo</div>
       <div class="info">
         <input type="text" class="basic-info-title" placeholder="Título do seu quizz" />
@@ -32,8 +32,49 @@
       <div class="info-button" onclick="sendBasicInfo()">
         <button>Prosseguir pra criar perguntas</button>
       </div>
+    </div> -->
+
+    <!-- Tela 3.2 - Perguntas do Quiz -->
+    <div class="quiz-questions">
+      <div class="quiz-title">Crie suas perguntas</div>
+      <div class="questions">
+        <!-- Pergunta modo resumido -->
+        <div class="question-label">
+          <span>Pergunta 1</span>
+          <button>
+            <ion-icon name="create-outline"></ion-icon>
+          </button>
+        </div>
+        <!-- Pergunta modo completo -->
+        <div class="question-info">
+          <div class="question">
+            <span>Pergunta 1</span>
+            <div>
+              <input type="text" placeholder="Texto da pergunta" />
+              <input type="text" placeholder="Cor de fundo da pergunta" />
+            </div>
+          </div>
+          <div class="question-right-answer">
+            <span>Resposta correta</span>
+            <div>
+              <input type="text" placeholder="Resposta correta" />
+              <input type="text" placeholder="URL da imagem" />
+            </div>
+          </div>
+          <div class="question-wrong-answer">
+            <span>Respostas incorretas</span>
+            <div class="wrong-answer">
+              <input type="text" placeholder="Resposta incorreta" />
+              <input type="text" placeholder="URL da imagem" />
+            </div>
+            <div class="wrong-answer">
+              <input type="text" placeholder="Resposta incorreta" />
+              <input type="text" placeholder="URL da imagem" />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- Fim da Info básica do Quiz -->
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script

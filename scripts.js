@@ -2,7 +2,7 @@
 
 // Criação do Quizz
 
-// Enviando info básica para o AXIOS
+// Tela 3.1 - Info básica do Quiz 
 function sendBasicInfo() {
   const title = document.querySelector(".basic-info-title").value;
   const image = document.querySelector(".basic-info-image").value;
@@ -10,73 +10,72 @@ function sendBasicInfo() {
     title: title,
     image: image,
     questions: [
-		{
-			title: "Título da pergunta 1",
-			color: "#123456",
-			answers: [
-				{
-					text: "Texto da resposta 1",
-					image: "https://http.cat/411.jpg",
-					isCorrectAnswer: true
-				},
-				{
-					text: "Texto da resposta 2",
-					image: "https://http.cat/412.jpg",
-					isCorrectAnswer: false
-				}
-			]
-		},
-		{
-			title: "Título da pergunta 2",
-			color: "#123456",
-			answers: [
-				{
-					text: "Texto da resposta 1",
-					image: "https://http.cat/411.jpg",
-					isCorrectAnswer: true
-				},
-				{
-					text: "Texto da resposta 2",
-					image: "https://http.cat/412.jpg",
-					isCorrectAnswer: false
-				}
-			]
-		},
-		{
-			title: "Título da pergunta 3",
-			color: "#123456",
-			answers: [
-				{
-					text: "Texto da resposta 1",
-					image: "https://http.cat/411.jpg",
-					isCorrectAnswer: true
-				},
-				{
-					text: "Texto da resposta 2",
-					image: "https://http.cat/412.jpg",
-					isCorrectAnswer: false
-				}
-			]
-		}
-	],
-	levels: [
-		{
-			title: "Título do nível 1",
-			image: "https://http.cat/411.jpg",
-			text: "Descrição do nível 1",
-			minValue: 0
-		},
-		{
-			title: "Título do nível 2",
-			image: "https://http.cat/412.jpg",
-			text: "Descrição do nível 2",
-			minValue: 50
-		}
-	]
-    }
-//   };
-  console.log(info);
-  // Post: post("endpoint da API", dados -> neste caso seria o "info")
+      {
+        title: "Título da pergunta 1",
+        color: "#123456",
+        answers: [
+          {
+            text: "Texto da resposta 1",
+            image: "https://http.cat/411.jpg",
+            isCorrectAnswer: true,
+          },
+          {
+            text: "Texto da resposta 2",
+            image: "https://http.cat/412.jpg",
+            isCorrectAnswer: false,
+          },
+        ],
+      },
+      {
+        title: "Título da pergunta 2",
+        color: "#123456",
+        answers: [
+          {
+            text: "Texto da resposta 1",
+            image: "https://http.cat/411.jpg",
+            isCorrectAnswer: true,
+          },
+          {
+            text: "Texto da resposta 2",
+            image: "https://http.cat/412.jpg",
+            isCorrectAnswer: false,
+          },
+        ],
+      },
+      {
+        title: "Título da pergunta 3",
+        color: "#123456",
+        answers: [
+          {
+            text: "Texto da resposta 1",
+            image: "https://http.cat/411.jpg",
+            isCorrectAnswer: true,
+          },
+          {
+            text: "Texto da resposta 2",
+            image: "https://http.cat/412.jpg",
+            isCorrectAnswer: false,
+          },
+        ],
+      },
+    ],
+    levels: [
+      {
+        title: "Título do nível 1",
+        image: "https://http.cat/411.jpg",
+        text: "Descrição do nível 1",
+        minValue: 0,
+      },
+      {
+        title: "Título do nível 2",
+        image: "https://http.cat/412.jpg",
+        text: "Descrição do nível 2",
+        minValue: 50,
+      },
+    ],
+  };
+
+  // Post: post("endpoint do AXIOS", dados -> neste caso seria o "info")
   const promisse = axios.post(
     "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes",
     info
@@ -90,6 +89,18 @@ function sendBasicInfo() {
     console.log("Deu um erro no envio dos dados de Info Basicas")
   );
 }
+
+// Tela 3.2 - Perguntas do Quiz
+
+
+
+
+
+
+
+
+
+
 
 /* 
 
