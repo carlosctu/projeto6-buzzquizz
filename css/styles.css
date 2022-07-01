@@ -165,7 +165,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 22px;
+  margin: 22px 0;
   font-size: 18px;
   line-height: 23px;
   font-weight: 700;
