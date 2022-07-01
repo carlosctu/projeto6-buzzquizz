@@ -113,7 +113,6 @@ Aí a partir daqui sou eu com o display e listagem, e antes seria você com a cr
 
 */
 
-/* eu aqui */
 
 /* Tela 1 Lista de Quizzes */
 
@@ -123,17 +122,20 @@ promisseGetQuizzes.then(displayTheQuizzes);
 
 function displayTheQuizzes(answer){
 
-  //const quizzesArraySerialized = localStorage.getItem("quizzesArray");
-  //const quizzesArray = JSON.parse(quizzesArraySerialized);
+  //const userQuizzesSerialized = localStorage.getItem("userQuizzes");
+  //const userQuizzes = JSON.parse(userQuizzesSerialized);
 
-
-  let quizz1 = {
+  //simulação do que viria do localStorage
+  let quizzExample = {
     id: 1,
     title: "Título do quizz",
     image: "https://http.cat/411.jpg"
   }
 
-  const userQuizzes = [quizz1]; //array de objetos, sendo cada objeto um quizz
+  const userQuizzes = [quizzExample]; //array de objetos, sendo cada objeto um quizz
+
+
+  
   let quizzes = answer.data;
   content = document.querySelector('.content');
 
@@ -191,3 +193,4 @@ function displayTheQuizzes(answer){
   }
 }
 
+/* Tela 2 Página de um Quizz */
