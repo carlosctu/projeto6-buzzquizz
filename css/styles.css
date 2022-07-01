@@ -41,7 +41,6 @@ body {
   padding: 21px 0 15px 0;
   margin-bottom: 29px;
 }
-
 .info input {
   width: 341px;
   height: 46px;
@@ -188,7 +187,7 @@ body {
   margin-right: 17px;
 }
 
-.question-wrong-answer>div {
+.question-wrong-answer > div {
   margin-bottom: 18px;
 }
 .quiz-button {
@@ -341,40 +340,74 @@ body {
   font-size: 20px;
   font-weight: 700;
 }
-.sucess-image{
+.sucess-image {
   position: relative;
   width: 340px;
   height: 181px;
+  margin-bottom: 15px;
 }
-.sucess-image img{
+.sucess-image img {
   position: absolute;
   width: 100%;
   height: 100%;
 }
-.success-quiz-title{
-  /* margin-bottom: 150px; */
+.success-quiz-title {
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 400;
   position: absolute;
   bottom: 0;
   left: 0;
-
 }
+.success-quiz-title {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  margin-left: 17px;
+  
+}
+.sucess-button button, .sucess-return button{
+  width: 220px;
+  height: 44px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  border-radius: 15px;
+  border: none;
+  margin-top: 9px;
+  border: none;
+  background: transparent;
+  outline: none;
+  background-color: #ec362d;
+  color: #ffffff;
+} 
+.sucess-return button{
+  background-color: inherit;
+  color: #818181;
+}
+/* .sucess-button,
+.sucess-return {
+  width: 341px;
+  height: 54px;
+}
+.sucess-button button,
+.sucess-return button{
+  width: 100%;
+  height: 54px;
+  margin: 28px 0 61px 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  border-radius: 15px;
+  border: none;
+}
+*/
 
-.hidden{
+
+.hidden {
   display: none;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .header {
   font-size: 37px;
@@ -494,6 +527,8 @@ body {
   display: flex;
   align-items: center;
 }
+
+
 
 .hidden {
   display: none;
