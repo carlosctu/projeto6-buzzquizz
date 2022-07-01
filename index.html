@@ -16,39 +16,80 @@
   </head>
   <body>
     <div class="header">BuzzQuizz</div>
+    <div class="content hidden">
+      <div class="display-lists">
+        <div class="user-none-quizzes">
+          <div class="none-quizzes-alert">
+            Você não criou nenhum quizz ainda :(
+          </div>
+          <div class="button-create-quizz">Criar Quizz</div>
+        </div>
+        <div class="user-quizzes">
+          <div class="title-user-quizzes">
+            Seus Quizzes <ion-icon name="add-circle"></ion-icon>
+          </div>
+          <div class="user-quizzes-list">
+            <div class="test-quizz"></div>
+            <div class="test-quizz"></div>
+            <div class="test-quizz"></div>
+            <div class="test-quizz"></div>
+            <div class="test-quizz"></div>
+          </div>
+        </div>
+        <div class="all-quizzes">
+          <div class="title-all-quizzes">Todos os Quizzes</div>
+          <div class="all-quizzes-list">
+            <div class="test-quizz"></div>
+            <div class="test-quizz"></div>
+            <div class="test-quizz"></div>
+            <div class="test-quizz"></div>
+            <div class="test-quizz"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-
-    <div class="content hidden"></div>
-    
     <!-- Criação de Quiz -->
     <!-- Tela 3.1 - Info básica do Quiz -->
-    <div class="basic-info ">
+    <div class="basic-info">
       <div class="info-title">Comece pelo começo</div>
-      <div class="info">
-        <input
-          type="text"
-          class="basic-info-title"
-          placeholder="Título do seu quizz"
-        />
-        <input
-          type="text"
-          class="basic-info-image"
-          placeholder="URL da imagem do seu quizz"
-        />
-        <input
-          type="text"
-          class="basic-info-questions"
-          placeholder="Quantidade de perguntas do quizz"
-        />
-        <input
-          type="text"
-          class="basic-info-questions-level"
-          placeholder="Quantidade de níveis do quizz"
-        />
-      </div>
-      <div class="info-button" onclick="sendBasicInfo()">
-        <button>Prosseguir pra criar perguntas</button>
-      </div>
+      <!-- method="post" -->
+      <form onsubmit="nextPage(this); return false">
+        <div class="info">
+          <input
+            type="text"
+            class="basic-info-title"
+            placeholder="Título do seu quizz"
+            minlength="20"
+            maxlength="65"
+            required
+          />
+          <input
+            type="url"
+            class="basic-info-image"
+            placeholder="URL da imagem do seu quizz"
+            required
+          />
+          <input
+            type="number"
+            min="3"
+            class="basic-info-questions"
+            placeholder="Quantidade de perguntas do quizz"
+            required
+          />
+          <input
+            type="number"
+            min="2"
+            class="basic-info-questions-level"
+            placeholder="Quantidade de níveis do quizz"
+            required
+          />
+        </div>
+        <!-- , sendBasicInfo() abaixo -->
+        <div class="info-button" >
+          <button type="submit">Prosseguir pra criar perguntas</button>
+        </div>
+      </form>
     </div>
     <!-- Tela 3.2 - Perguntas do Quiz -->
     <div class="quiz-questions hidden">
@@ -88,7 +129,7 @@
           </div>
         </div>
       </div>
-      <div class="quiz-button" onclick="">
+      <div class="quiz-button" onclick="nextPage(this)">
         <button>Prosseguir para criar níveis</button>
       </div>
     </div>
@@ -119,7 +160,7 @@
           </div>
         </div>
       </div>
-      <div class="levels-button" onclick="">
+      <div class="levels-button" onclick="nextPage(this)">
         <button>Finalizar Quizz</button>
       </div>
     </div>
