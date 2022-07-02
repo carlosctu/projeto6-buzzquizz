@@ -264,6 +264,9 @@ Aí a partir daqui sou eu com o display e listagem, e antes seria você com a cr
 
 */
 
+display1();
+
+
 /* Tela 1 Lista de Quizzes */
 function display1(){
   let content;
@@ -342,11 +345,10 @@ function display1(){
   }
 }
 
-display1();
-
 /* Tela 2 Página de um Quizz */
 
 function display2(quizzClickedDiv){
+  
   for(let i=0; i<10000; i++){
     if(quizzClickedDiv.classList.contains(`q${i}`) === true){
       let idClicked = i;
@@ -378,7 +380,7 @@ function display2(quizzClickedDiv){
     </div>
 
     <div class="button-reset-quizz">Reiniciar Quizz</div>
-    <div class="button-back-home">Voltar pra home</div>
+    <div class="button-back-home" onclick="display1()">Voltar pra home</div>
     `;
     let clickedQuizzQuestionsArray = quizzClicked.questions;
     let clickedQuizzQuestionsList = document.querySelector(".questions-in-quizz");
@@ -403,6 +405,13 @@ function display2(quizzClickedDiv){
         `;
       }
     }
+
+
+
+
+
+
+
     let clickedQuizzLevelsArray = quizzClicked.levels;
     let clickedQuizzLevelsList = document.querySelector(".quizz-sucess-report");
 
