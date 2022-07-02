@@ -306,7 +306,7 @@ function display1(){
       let displayAllList = document.querySelector(".all-quizzes-list");
       for (let i = 0; i < quizzes.length; i++) {
         displayAllList.innerHTML += `
-        <div class="quizz q${quizzes[i].id}" onclick="display2()"><img src="${quizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${quizzes[i].title}</p></div>
+        <div class="quizz q${quizzes[i].id}" onclick="display2(this)"><img src="${quizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${quizzes[i].title}</p></div>
         `;
       }
     }
@@ -328,27 +328,26 @@ function display1(){
       let displayUserList = document.querySelector(".user-quizzes-list");
       for (let i = 0; i < userQuizzes.length; i++) {
         displayUserList.innerHTML += `
-        <div class="quizz q${quizzes[i].id}" onclick="display2()"><img src="${userQuizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${userQuizzes[i].title}</p></div>
+        <div class="quizz q${quizzes[i].id}" onclick="display2(this)"><img src="${userQuizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${userQuizzes[i].title}</p></div>
         `;
       }
 
       let displayAllList = document.querySelector(".all-quizzes-list");
       for (let i = 0; i < quizzes.length; i++) {
         displayAllList.innerHTML += `
-        <div class="quizz q${quizzes[i].id}" onclick="display2()"><img src="${quizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${quizzes[i].title}</p></div>
+        <div class="quizz q${quizzes[i].id}" onclick="display2(this)"><img src="${quizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${quizzes[i].title}</p></div>
         `;
       }
     }
   }
 }
 
-//display1();
+display1();
 
 /* Tela 2 Página de um Quizz */
 
 function display2(quizzClickedDiv){
-
-  for(let i=0; i<100; i++){
+  for(let i=0; i<10000; i++){
     if(quizzClickedDiv.classList.contains(`q${i}`) === true){
       let idClicked = i;
       let promisseGetQuizzClicked = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${idClicked}`);
@@ -360,10 +359,56 @@ function display2(quizzClickedDiv){
     let quizzClicked = answer.data;
     content = document.querySelector(".content");
 
+    content.innerHTML = `
+    <div class="title-in-quizz">
+      <p>${quizzClicked.title}</p>
+      <img src="${quizzClicked.image}">
+      <div class="title-in-quizz-gradient"></div>
+    </div>
+    <div class="questions-in-quizz"></div>
+    
+    <div class="quizz-sucess-report">
+      <div class="title-quizz-sucess-report">
+        <p>Título do nível 1</p>
+      </div>
+      <div class="description-quizz-sucess-report">
+        <img src="https://http.cat/411.jpg">
+        <p>Descrição do nível 1</p>
+      </div>
+    </div>
 
-
-
-
+    <div class="button-reset-quizz">Reiniciar Quizz</div>
+    <div class="button-back-home">Voltar pra home</div>
+    `;
+    let clickedQuizzQuestionsArray = quizzClicked.questions;
+    let clickedQuizzQuestionsList = document.querySelector(".questions-in-quizz");
+    for(let i = 0; i<clickedQuizzQuestionsArray.length; i++){
+      clickedQuizzQuestionsList.innerHTML+=`
+      <div class="question-in-quizz">
+        <div style="background-color:${clickedQuizzQuestionsArray[i].color}" class="title-question-in-quizz">
+          <p>${clickedQuizzQuestionsArray[i].title}</p>
+        </div>
+        <div class="answers-question-in-quizz answers-question-in-quizz${i}"></div>
+      </div>
+      `;
+      let clickedQuizzAnswersArray = clickedQuizzQuestionsArray[i].answers;
+      let clickedQuizzAnswersList = document.querySelector(`.answers-question-in-quizz${i}`);
+      let clickedQuizzAnswersArraySort = clickedQuizzAnswersArray.sort(comparador);
+      for(let j = 0; j<clickedQuizzAnswersArray.length; j++){
+        clickedQuizzAnswersList.innerHTML+=`
+      <div class="answer-question-in-quizz">
+        <img src="${clickedQuizzAnswersArraySort[j].image}">
+        <p>${clickedQuizzAnswersArraySort[j].text}</p>
+      </div>
+        `;
+      }
+    }
+    let clickedQuizzLevelsArray = quizzClicked.levels;
+    let clickedQuizzLevelsList = document.querySelector(".quizz-sucess-report");
 
   }
+}
+
+function comparador() { 
+	return Math.random() - 0.5; 
 }
