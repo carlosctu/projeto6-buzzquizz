@@ -223,7 +223,7 @@ function display1(){
       let displayAllList = document.querySelector(".all-quizzes-list");
       for (let i = 0; i < quizzes.length; i++) {
         displayAllList.innerHTML += `
-        <div class="quizz"><img src="${quizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${quizzes[i].title}</p></div>
+        <div class="quizz q${quizzes[i].id}" onclick="display2()"><img src="${quizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${quizzes[i].title}</p></div>
         `;
       }
     }
@@ -245,14 +245,14 @@ function display1(){
       let displayUserList = document.querySelector(".user-quizzes-list");
       for (let i = 0; i < userQuizzes.length; i++) {
         displayUserList.innerHTML += `
-        <div class="quizz"><img src="${userQuizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${userQuizzes[i].title}</p></div>
+        <div class="quizz q${quizzes[i].id}" onclick="display2()"><img src="${userQuizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${userQuizzes[i].title}</p></div>
         `;
       }
 
       let displayAllList = document.querySelector(".all-quizzes-list");
       for (let i = 0; i < quizzes.length; i++) {
         displayAllList.innerHTML += `
-        <div class="quizz"><img src="${quizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${quizzes[i].title}</p></div>
+        <div class="quizz q${quizzes[i].id}" onclick="display2()"><img src="${quizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${quizzes[i].title}</p></div>
         `;
       }
     }
@@ -262,3 +262,25 @@ function display1(){
 //display1();
 
 /* Tela 2 Página de um Quizz */
+
+function display2(quizzClickedDiv){
+
+  for(let i=0; i<100; i++){
+    if(quizzClickedDiv.classList.contains(`q${i}`) === true){
+      let idClicked = i;
+      let promisseGetQuizzClicked = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${idClicked}`);
+      promisseGetQuizzClicked.then(displayTheQuizzClicked);
+    }
+  }
+
+  function displayTheQuizzClicked(answer){
+    let quizzClicked = answer.data;
+    content = document.querySelector(".content");
+
+
+
+
+
+
+  }
+}
