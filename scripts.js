@@ -331,7 +331,7 @@ function display1(){
       let displayUserList = document.querySelector(".user-quizzes-list");
       for (let i = 0; i < userQuizzes.length; i++) {
         displayUserList.innerHTML += `
-        <div class="quizz q${quizzes[i].id}" onclick="display2(this)"><img src="${userQuizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${userQuizzes[i].title}</p></div>
+        <div class="quizz q${userQuizzes[i].id}" onclick="display2(this)"><img src="${userQuizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${userQuizzes[i].title}</p></div>
         `;
       }
 
@@ -352,7 +352,7 @@ function display2(quizzClickedDiv){
   for(let i=0; i<10000; i++){
     if(quizzClickedDiv.classList.contains(`q${i}`) === true){
       let idClicked = i;
-      let promisseGetQuizzClicked = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${idClicked}`);
+      let promisseGetQuizzClicked = axios.get(`https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/${idClicked}`);
       promisseGetQuizzClicked.then(displayTheQuizzClicked);
     }
   }
