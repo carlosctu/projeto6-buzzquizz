@@ -29,6 +29,11 @@ body {
   font-size: 20px;
   font-weight: 700;
 }
+.basic-info form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .info {
   width: 375px;
@@ -74,6 +79,7 @@ body {
   border-radius: 15px;
   border: none;
 }
+
 /* Tela 3.2 - Perguntas do Quiz */
 .quiz-questions {
   width: 100%;
@@ -95,8 +101,13 @@ body {
   font-weight: 700;
 }
 
-.questions {
+.quiz-questions form {
   width: 375px;
+}
+.question-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .question-info {
@@ -145,7 +156,7 @@ body {
   padding-left: 14px;
 }
 
-.questions span {
+.quiz-questions form span {
   width: 90%;
   display: block;
   font-size: 16px;
@@ -165,7 +176,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 22px 0;
+  margin: 22px 0 11px 0;
   font-size: 18px;
   line-height: 23px;
   font-weight: 700;
@@ -224,8 +235,11 @@ body {
   font-size: 20px;
   font-weight: 700;
 }
-.levels {
+.levels-form {
   width: 375px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .level-info {
   width: 100%;
@@ -234,6 +248,7 @@ body {
   align-items: center;
   justify-content: center;
   background-color: #ffffff;
+  margin-bottom: 22px;
 }
 .level {
   width: 100%;
@@ -270,7 +285,7 @@ body {
   color: #bababa;
   padding-left: 14px;
 }
-.levels span {
+.levels-form span {
   width: 90%;
   display: block;
   font-size: 16px;
@@ -288,6 +303,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  /* margin-top: 11px; */
   margin-bottom: 22px;
   font-size: 18px;
   line-height: 23px;
@@ -385,6 +401,9 @@ body {
 .sucess-return button{
   background-color: inherit;
   color: #818181;
+}
+body input[value=""]{
+  color: red;
 }
 /* .sucess-button,
 .sucess-return {
