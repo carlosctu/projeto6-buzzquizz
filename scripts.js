@@ -265,80 +265,83 @@ Aí a partir daqui sou eu com o display e listagem, e antes seria você com a cr
 */
 
 /* Tela 1 Lista de Quizzes */
+function display1(){
+  let content;
+  let promisseGetQuizzes = axios.get(
+    "https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes"
+  );
+  promisseGetQuizzes.then(displayTheQuizzes);
 
-// let content;
-// let promisseGetQuizzes = axios.get(
-//   "https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes"
-// );
-// promisseGetQuizzes.then(displayTheQuizzes);
+  function displayTheQuizzes(answer) {
+    //const userQuizzesSerialized = localStorage.getItem("userQuizzes");
+    //const userQuizzes = JSON.parse(userQuizzesSerialized);
 
-// function displayTheQuizzes(answer) {
-//   //const userQuizzesSerialized = localStorage.getItem("userQuizzes");
-//   //const userQuizzes = JSON.parse(userQuizzesSerialized);
+    //simulação do que viria do localStorage
+    let quizzExample = {
+      id: 1,
+      title: "Título do quizz",
+      image: "https://http.cat/411.jpg",
+    };
 
-//   //simulação do que viria do localStorage
-//   let quizzExample = {
-//     id: 1,
-//     title: "Título do quizz",
-//     image: "https://http.cat/411.jpg",
-//   };
+    const userQuizzes = [quizzExample]; //array de objetos, sendo cada objeto um quizz
 
-//   const userQuizzes = [quizzExample]; //array de objetos, sendo cada objeto um quizz
+    let quizzes = answer.data;
+    content = document.querySelector(".content");
 
-//   let quizzes = answer.data;
-//   content = document.querySelector(".content");
+    if (userQuizzes.length === 0) {
+      content.innerHTML = `
+      <div class="display-lists">
+      <div class="user-none-quizzes">
+        <div class="none-quizzes-alert">
+          Você não criou nenhum quizz ainda :(
+        </div>
+        <div class="button-create-quizz">Criar Quizz</div>
+      </div>
+      <div class="all-quizzes">
+        <div class="title-all-quizzes">Todos os Quizzes</div>
+        <div class="all-quizzes-list"></div>
+      </div>
+      `;
 
-//   if (userQuizzes.length === 0) {
-//     content.innerHTML = `
-//     <div class="display-lists">
-//     <div class="user-none-quizzes">
-//       <div class="none-quizzes-alert">
-//         Você não criou nenhum quizz ainda :(
-//       </div>
-//       <div class="button-create-quizz">Criar Quizz</div>
-//     </div>
-//     <div class="all-quizzes">
-//       <div class="title-all-quizzes">Todos os Quizzes</div>
-//       <div class="all-quizzes-list"></div>
-//     </div>
-//     `;
+      let displayAllList = document.querySelector(".all-quizzes-list");
+      for (let i = 0; i < quizzes.length; i++) {
+        displayAllList.innerHTML += `
+        <div class="quizz"><img src="${quizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${quizzes[i].title}</p></div>
+        `;
+      }
+    }
 
-//     let displayAllList = document.querySelector(".all-quizzes-list");
-//     for (let i = 0; i < quizzes.length; i++) {
-//       displayAllList.innerHTML += `
-//       <div class="quizz"><img src="${quizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${quizzes[i].title}</p></div>
-//       `;
-//     }
-//   }
+    if (userQuizzes.length !== 0) {
+      content.innerHTML = `
+      <div class="user-quizzes">
+        <div class="title-user-quizzes">
+          Seus Quizzes <ion-icon name="add-circle"></ion-icon>
+        </div>
+        <div class="user-quizzes-list"></div>
+      </div>
+      <div class="all-quizzes">
+        <div class="title-all-quizzes">Todos os Quizzes</div>
+        <div class="all-quizzes-list"></div>
+      </div>
+      `;
 
-//   if (userQuizzes.length !== 0) {
-//     content.innerHTML = `
-//     <div class="user-quizzes">
-//       <div class="title-user-quizzes">
-//         Seus Quizzes <ion-icon name="add-circle"></ion-icon>
-//       </div>
-//       <div class="user-quizzes-list"></div>
-//     </div>
-//     <div class="all-quizzes">
-//       <div class="title-all-quizzes">Todos os Quizzes</div>
-//       <div class="all-quizzes-list"></div>
-//     </div>
-//     `;
+      let displayUserList = document.querySelector(".user-quizzes-list");
+      for (let i = 0; i < userQuizzes.length; i++) {
+        displayUserList.innerHTML += `
+        <div class="quizz"><img src="${userQuizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${userQuizzes[i].title}</p></div>
+        `;
+      }
 
-//     let displayUserList = document.querySelector(".user-quizzes-list");
-//     for (let i = 0; i < userQuizzes.length; i++) {
-//       displayUserList.innerHTML += `
-//       <div class="quizz"><img src="${userQuizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${userQuizzes[i].title}</p></div>
-//       `;
-//     }
+      let displayAllList = document.querySelector(".all-quizzes-list");
+      for (let i = 0; i < quizzes.length; i++) {
+        displayAllList.innerHTML += `
+        <div class="quizz"><img src="${quizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${quizzes[i].title}</p></div>
+        `;
+      }
+    }
+  }
+}
 
-//     let displayAllList = document.querySelector(".all-quizzes-list");
-//     for (let i = 0; i < quizzes.length; i++) {
-//       displayAllList.innerHTML += `
-//       <div class="quizz"><img src="${quizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${quizzes[i].title}</p></div>
-//       `;
-//     }
-//   }
-// }
+//display1();
 
 /* Tela 2 Página de um Quizz */

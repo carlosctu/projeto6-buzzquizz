@@ -600,22 +600,60 @@ body input[value=""]{
     word-break: break-word;
 }
 
+.title-in-quizz{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 227px;
+  width: 100%;
+  margin-top: 69px;
+}
+
+.title-in-quizz img{
+  height: 227px;
+  width: 100%;
+  position: absolute;
+  object-fit: cover;
+  object-position: center;
+}
+
 @media (max-width: 1100px) {
   .user-none-quizzes {
-    width: 340px;
+    width: 90.6vw;
   }
 
   .user-quizzes {
-    width: 340px;
+    width: 90.6vw;
     margin-left: 0px;
   }
 
+  .user-quizzes-list{
+    display: initial;
+  }
+
+  .all-quizzes-list{
+    display: initial;
+  }
+
   .all-quizzes {
-    width: 340px;
+    width: 90.6vw;
     margin-left: 0px;
   }
 
   .test-quizz {
     margin-right: 0px;
+  }
+
+  .quizz-image{
+    width: 90.6vw;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .quizz-image-gradient{
+    width: 90.6vw;
   }
 }
