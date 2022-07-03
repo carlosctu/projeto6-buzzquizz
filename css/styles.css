@@ -510,11 +510,27 @@ body input[value=""]{
   margin-left: 15px;
 }
 .title-user-quizzes {
+  width: 100%;
   font-weight: 700;
   font-size: 20px;
   line-height: 23px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 23px;
+  display: flex;
+  align-items: center;
+}
+.title-user-quizzes button{
+  padding: inherit;
+  border: none;
+  background: transparent;
+  outline: none;
 }
 .title-user-quizzes ion-icon {
   font-size: 30px;
@@ -524,6 +540,7 @@ body input[value=""]{
 }
 .user-quizzes-list {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: start;
 }
@@ -532,6 +549,11 @@ body input[value=""]{
   background-color: #ec362d;
   }
 
+/* .user-quizzes-list{
+  width: 100%;
+  height: 181px;
+  background-color: red;
+} */
 
 .quizz {
   border-radius: 5px;

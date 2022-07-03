@@ -204,19 +204,27 @@ function getQuestions(i) {
   }
 
   for (let j = 1; j <= contWrongAnswers; j++) {
-    let text = document.querySelector(`.wrong-answer-${j} input`).value;
-
+    // console.log(`.question-${j} wrong-answer-${j}`)
+    let text = document.querySelector(
+      `.question-${i} .wrong-answer-${j} input`
+    ).value;
+    console.log("O texto desta vez foi: " + text);
+    // alert(text)
     if (text !== "") {
-      wrongAnswer = {
+      let wrongAnswer = {
         text: text,
-        image: document.querySelector(`.url-wrong-answer-${j}`).value,
+        image: document.querySelector(`.question-${i} .url-wrong-answer-${j}`)
+          .value,
         isCorrectAnswer: false,
       };
+      // console.log(wrongAnswer.image);
+      console.log(wrongAnswer);
       answers.push(wrongAnswer);
     }
     wrongAnswer = {};
   }
   questions.push(question);
+  answers = [];
   question = {};
 }
 function getLevels(j) {
@@ -257,22 +265,28 @@ function sendBasicInfo() {
     infoQuizz
   );
   promisse.then((data) => {
-    const response = data
-    const quizzInfos = {
+    let userQuizzes = [];
+    const deserializedInfo = localStorage.getItem("userQuizzes");
+    let list = JSON.parse(deserializedInfo);
+    if (list !== null) {
+      userQuizzes = list;
+    }
+    const response = data;
+    let quizzInfos = {
       id: response.data.id,
-      title: infoQuizz.title,
-      image: infoQuizz.image,
+      title: response.data.title,
+      image: response.data.image,
     };
-    const serializedInfo = JSON.stringify(quizzInfos);
+    userQuizzes.push(quizzInfos);
+    let serializedInfo = JSON.stringify(userQuizzes);
     // Chave para pegar do localStorage: "userQuizzes", Data: serializeInfo
-    localStorage.setItem("userQuizzes", serializedInfo)
+    localStorage.setItem("userQuizzes", serializedInfo);
   });
   promisse.catch(() => {
     console.log("Deu um erro no envio dos dados de Info Basicas");
   });
 }
 
-function serializarDados() {}
 /*
 
 ------------------------------------------------------------------------------------------------------------
@@ -296,6 +310,12 @@ function display1() {
   promisseGetQuizzes.then(displayTheQuizzes);
 
   function displayTheQuizzes(answer) {
+    // let userQuizzes = [];
+    const deserializedInfo = localStorage.getItem("userQuizzes");
+    const list = JSON.parse(deserializedInfo);
+    console.log(list);
+    // userQuizzes.push(list);
+    // alert(userQuizzes)
     //const userQuizzesSerialized = localStorage.getItem("userQuizzes");
     //const userQuizzes = JSON.parse(userQuizzesSerialized);
 
@@ -305,13 +325,14 @@ function display1() {
     //   title: "Título do quizz",
     //   image: "https://http.cat/411.jpg",
     // };
-    let quizzExample = [];
-    const userQuizzes = quizzExample; //array de objetos, sendo cada objeto um quizz
 
+    // let quizzExample = [];
+    // const userQuizzes = quizzExample; //array de objetos, sendo cada objeto um quizz
+    console.log(list);
     let quizzes = answer.data;
     content = document.querySelector(".content");
 
-    if (userQuizzes.length === 0) {
+    if (list == null) {
       content.innerHTML = `
       <div class="display-lists">
       <div class="user-none-quizzes">
@@ -329,16 +350,19 @@ function display1() {
       let displayAllList = document.querySelector(".all-quizzes-list");
       for (let i = 0; i < quizzes.length; i++) {
         displayAllList.innerHTML += `
-        <div class="quizz q${quizzes[i].id}" onclick="display2(this)"><img src="${quizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${quizzes[i].title}</p></div>
+        <div class="quizz q${quizzes[i].id}" onclick="display2(this)">
+          <img src="${quizzes[i].image}" class="quizz-image">
+          <div class="quizz-image-gradient"></div>
+          <p>${quizzes[i].title}</p>
+        </div>
         `;
       }
-    }
-
-    if (userQuizzes.length !== 0) {
+    } else {
+      // if (list.length !== 0) {
       content.innerHTML = `
       <div class="user-quizzes">
-        <div class="title-user-quizzes">
-          Seus Quizzes <ion-icon name="add-circle"></ion-icon>
+        <div class="title-user-quizzes">  
+          <p>Seus Quizzes</p><button onclick="createQuizz(this)"><ion-icon name="add-circle"></ion-icon></button>
         </div>
         <div class="user-quizzes-list"></div>
       </div>
@@ -349,9 +373,15 @@ function display1() {
       `;
 
       let displayUserList = document.querySelector(".user-quizzes-list");
-      for (let i = 0; i < userQuizzes.length; i++) {
+      console.log(list.length);
+      for (let i = 0; i < list.length; i++) {
+        console.log("caiu aqui");
         displayUserList.innerHTML += `
-        <div class="quizz q${userQuizzes[i].id}" onclick="display2(this)"><img src="${userQuizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${userQuizzes[i].title}</p></div>
+        <div class="quizz q${list[i].id}" onclick="display2(this)">
+          <img src="${list[i].image}" class="quizz-image">
+          <div class="quizz-image-gradient"></div>
+          <p>${list[i].title}</p>
+        </div>
         `;
       }
 
@@ -361,6 +391,7 @@ function display1() {
         <div class="quizz q${quizzes[i].id}" onclick="display2(this)"><img src="${quizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${quizzes[i].title}</p></div>
         `;
       }
+      // }
     }
   }
 }
@@ -401,7 +432,7 @@ function display2(quizzClickedDiv) {
     </div>
 
     <div class="button-reset-quizz">Reiniciar Quizz</div>
-    <div class="button-back-home" onclick="display1()">Voltar pra home</div>
+    <div class="button-back-home" onclick="reset()">Voltar pra home</div>
     `;
     let clickedQuizzQuestionsArray = quizzClicked.questions;
     let clickedQuizzQuestionsList = document.querySelector(
@@ -439,4 +470,8 @@ function display2(quizzClickedDiv) {
 
 function comparador() {
   return Math.random() - 0.5;
+}
+
+function reset() {
+  window.location.reload();
 }
