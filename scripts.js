@@ -368,6 +368,8 @@ function display1() {
 
 /* Tela 2 Página de um Quizz */
 
+let quizzSelectedObject;
+
 function display2(quizzClickedDiv) {
   for (let i = 0; i < 10000; i++) {
     if (quizzClickedDiv.classList.contains(`q${i}`) === true) {
@@ -380,6 +382,7 @@ function display2(quizzClickedDiv) {
   }
 
   function displayTheQuizzClicked(answer) {
+    quizzSelectedObject = answer.data;
     let quizzClicked = answer.data;
     content = document.querySelector(".content");
 
@@ -444,37 +447,46 @@ function display2(quizzClickedDiv) {
     }
   }
 }
-
+let counterFalse = 0;
+let counterTrue = 0;
+let scrollCounter = 0;
 function calculateQuizzSuccess(answerClickedDiv){
-  let counterFalse = 0;
-  let counterTrue = 0;
   if(answerClickedDiv.classList.contains('correct-answer') === true){
+    answerClickedDiv.onclick=null;
     answerClickedDiv.classList.add('answer-question-in-quizz-true');
     let divQuestionsIn = answerClickedDiv.parentNode;
-    
     const falseAnswersArray = divQuestionsIn.querySelectorAll('.incorrect-answer');
-    
     falseAnswersArray.forEach((answer) => {
       answer.classList.add('answer-question-in-quizz-false');
+      answer.onclick=null;
     });
     counterTrue++;
+    divQuestionsIn.onclick=null;
   }
   if(answerClickedDiv.classList.contains('incorrect-answer') === true){
+    answerClickedDiv.onclick=null;
     let divQuestionsIn = answerClickedDiv.parentNode;
     const falseAnswersArray = divQuestionsIn.querySelectorAll('.incorrect-answer');
     falseAnswersArray.forEach((answer) => {
       answer.classList.add('answer-question-in-quizz-false');
+      answer.onclick=null;
     });
     answerClickedDiv.classList.add('answer-question-in-quizz-false-selected');
-    divQuestionsIn.querySelector('.correct-answer').classList.add('answer-question-in-quizz-false');;
+    divQuestionsIn.querySelector('.correct-answer').classList.add('answer-question-in-quizz-true-nonselected');
+    divQuestionsIn.querySelector('.correct-answer').onclick=null;
     counterFalse++;
+  }
+  let questionIn = document.querySelectorAll(".question-in-quizz");
+  if(scrollCounter < questionIn.length-1){
+    scrollCounter++;
+    questionIn[scrollCounter].scrollIntoView({block: "end", inline: "nearest", behavior: "smooth"});
   }
 
 
 
 
-  let clickedQuizzLevelsArray = quizzClicked.levels;
-  let clickedQuizzLevelsList = document.querySelector(".quizz-sucess-report");
+  //let clickedQuizzLevelsArray = quizzClicked.levels;
+  //let clickedQuizzLevelsList = document.querySelector(".quizz-sucess-report");
 }
 
 function comparador() {

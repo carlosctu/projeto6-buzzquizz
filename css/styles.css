@@ -709,6 +709,11 @@ body input[value=""]{
   color: #FF4B4B;
 }
 
+.answer-question-in-quizz-true-nonselected{
+  color: #009C22;
+  opacity: 0.3;
+}
+
 .answer-question-in-quizz p{
   margin-top: 10px;
   font-weight: 700;
