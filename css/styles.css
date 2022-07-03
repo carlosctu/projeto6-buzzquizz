@@ -235,6 +235,12 @@ body {
   font-size: 20px;
   font-weight: 700;
 }
+.level-title-1{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* margin-left: 50px; */
+}
 .levels-form {
   width: 375px;
   display: flex;

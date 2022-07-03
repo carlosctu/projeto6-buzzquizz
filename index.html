@@ -20,7 +20,7 @@
   </div>
   <!-- Criação de Quiz -->
     <!-- Tela 3.1 - Info básica do Quiz -->
-    <div class="basic-info ">
+    <div class="basic-info hidden">
       <div class="info-title">Comece pelo começo</div>
       <!-- method="post" -->
       <form onsubmit="nextPage(this); return false">
@@ -83,8 +83,8 @@
       <div class="sucess-button" onclick="">
         <button>Acessar Quizz</button>
       </div>
-      <div class="sucess-return" onclick="">
-        <button>Voltar para o home</button>
+      <div class="sucess-return">
+        <button  onclick="goHome(this)">Voltar para o home</button>
       </div>
     </div>
 

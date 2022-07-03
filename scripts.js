@@ -2,7 +2,19 @@
 // Criação do Quizz
 // Navegação entre páginas
 let qtQuestions, qtLevels;
+const questions = [];
+const levels = [];
 
+function createQuizz(element) {
+  const hideContent = element.parentNode.parentNode.parentNode;
+  hideContent.classList.add("hidden");
+  document.querySelector(".basic-info").classList.remove("hidden");
+}
+function goHome(element) {
+  const hideContent = element.parentNode.parentNode;
+  hideContent.classList.add("hidden");
+  document.querySelector(".content").classList.remove("hidden");
+}
 function nextPage(element) {
   const section = element.parentNode.classList;
   console.log(section);
@@ -17,6 +29,7 @@ function nextPage(element) {
     document.querySelector(".quiz-levels").classList.remove("hidden");
   } else if (section.contains("quiz-levels")) {
     document.querySelector(".quiz-success").classList.remove("hidden");
+    sendBasicInfo();
   }
 }
 //Cria perguntas
@@ -24,33 +37,33 @@ function createQuestions(qtQuestions) {
   const questionLabel = document.querySelector(".question-form");
   for (let i = 1; i <= qtQuestions; i++) {
     questionLabel.innerHTML += `<div class="question-label ${i}"><span>Pergunta ${i}</span><button type="button" onclick="openQuestion(this)"><ion-icon name="create-outline"></ion-icon></button></div>`;
-    questionLabel.innerHTML += `<div class="question-info ${i} hidden"><div class="question">
+    questionLabel.innerHTML += `<div class="question-info question-${i} hidden"><div class="question">
       <span>Pergunta ${i}</span>
       <div>
-        <input type="text" placeholder="Texto da pergunta" minlength="20"  required/>
-        <input type="text" placeholder="Cor de fundo da pergunta (Ex: #ffffff)" pattern="[#A-Za-z0-9]{7}"required/>
+        <input class="title-question-${i}" type="text" placeholder="Texto da pergunta" minlength="20"  required/>
+        <input class="color-question-${i}" type="text" placeholder="Cor de fundo da pergunta (Ex: #ffffff)" pattern="[#A-Za-z0-9]{7}"required/>
       </div>
     </div>
     <div class="question-right-answer">
       <span>Resposta correta</span>
       <div>
-        <input type="text" placeholder="Resposta correta"  required/>
-        <input type="url" placeholder="URL da imagem"  required/>
+        <input class="right-answer-${i}" type="text" placeholder="Resposta correta"  required/>
+        <input class="url-answer-${i}" type="url" placeholder="URL da imagem"  required/>
       </div>
     </div>
     <div class="question-wrong-answer">
       <span>Respostas incorretas</span>
-      <div class="wrong-answer">
-        <input type="text" placeholder="Resposta incorreta"  required/>
-        <input type="url" placeholder="URL da imagem" required/>
+      <div class="wrong-answer-1">
+        <input class="wrong-answer-1" type="text" placeholder="Resposta incorreta"  required/>
+        <input class="url-wrong-answer-1" type="url" placeholder="URL da imagem" required/>
       </div>
-      <div class="wrong-answer">
-        <input type="text" placeholder="Resposta incorreta" />
-        <input type="url" placeholder="URL da imagem" />
+      <div class="wrong-answer-2">
+        <input class="wrong-answer-2" type="text" placeholder="Resposta incorreta" />
+        <input class="url-wrong-answer-2" type="url" placeholder="URL da imagem" />
       </div>
-      <div class="wrong-answer">
-        <input type="text" placeholder="Resposta incorreta" />
-        <input type="url" placeholder="URL da imagem" />
+      <div class="wrong-answer-3">
+        <input class="wrong-answer-3" type="text" placeholder="Resposta incorreta" />
+        <input class="url-wrong-answer-3" type="url" placeholder="URL da imagem" />
       </div>
     </div>
     </div>`;
@@ -77,7 +90,6 @@ function openQuestion(element) {
     allQuestions[parent.classList[1] - 1].classList.add("opened-question");
   }
 }
-
 //Cria niveis
 function createLevels(qtLevels) {
   const levelLabel = document.querySelector(".levels-form");
@@ -89,21 +101,23 @@ function createLevels(qtLevels) {
       <span>Nível ${i}</span>
       <div>
         <input
+          class="level-title-${i}"
           type="text"
           placeholder="Título do nível"
           minlength="10"
           required
         />
         <input
+        class="level-minvalue-${i}"
           type="number"
           placeholder="% de acerto mínimo (informar 0)"
           min="0"
           max="0"
           required
         />
-        <input type="url" placeholder="URL da imagem do nível" required />
+        <input class="level-url-${i}" type="url" placeholder="URL da imagem do nível" required />
         <textarea
-          class="text-area"
+          class="level-text-area-${i}"
           cols="30"
           rows="7"
           placeholder="Descrição do nível"
@@ -116,21 +130,23 @@ function createLevels(qtLevels) {
       <span>Nível ${i}</span>
       <div>
         <input
+          class="level-title-${i}"
           type="text"
           placeholder="Título do nível"
           minlength="10"
           required
         />
         <input
+          class="level-minvalue-${i}"
           type="number"
           placeholder="% de acerto mínima"
           min="0"
           max="100"
           required
         />
-        <input type="url" placeholder="URL da imagem do nível" required />
+        <input class="level-url-${i}" type="url" placeholder="URL da imagem do nível" required />
         <textarea
-          class="text-area"
+        class="level-text-area-${i}"
           cols="30"
           rows="7"
           placeholder="Descrição do nível"
@@ -141,7 +157,6 @@ function createLevels(qtLevels) {
   }
   levelLabel.innerHTML += `<div class="levels-button"><button type="submit">Finalizar Quizz</button></div>`;
 }
-
 // Abrir/Editar level do Quizz
 function openLevel(element) {
   const parent = element.parentNode;
@@ -163,93 +178,112 @@ function openLevel(element) {
   }
 }
 
-// Tela 3.1 - Info básica do Quiz
-// function sendBasicInfo() {
-//   const title = document.querySelector(".basic-info-title").value;
-//   const image = document.querySelector(".basic-info-image").value;
-//   const info = {
-//     title: title,
-//     image: image,
-//     questions: [
-//       {
-//         title: "Título da pergunta 1",
-//         color: "#123456",
-//         answers: [
-//           {
-//             text: "Texto da resposta 1",
-//             image: "https://http.cat/411.jpg",
-//             isCorrectAnswer: true,
-//           },
-//           {
-//             text: "Texto da resposta 2",
-//             image: "https://http.cat/412.jpg",
-//             isCorrectAnswer: false,
-//           },
-//         ],
-//       },
-//       {
-//         title: "Título da pergunta 2",
-//         color: "#123456",
-//         answers: [
-//           {
-//             text: "Texto da resposta 1",
-//             image: "https://http.cat/411.jpg",
-//             isCorrectAnswer: true,
-//           },
-//           {
-//             text: "Texto da resposta 2",
-//             image: "https://http.cat/412.jpg",
-//             isCorrectAnswer: false,
-//           },
-//         ],
-//       },
-//       {
-//         title: "Título da pergunta 3",
-//         color: "#123456",
-//         answers: [
-//           {
-//             text: "Texto da resposta 1",
-//             image: "https://http.cat/411.jpg",
-//             isCorrectAnswer: true,
-//           },
-//           {
-//             text: "Texto da resposta 2",
-//             image: "https://http.cat/412.jpg",
-//             isCorrectAnswer: false,
-//           },
-//         ],
-//       },
-//     ],
-//     levels: [
-//       {
-//         title: "Título do nível 1",
-//         image: "https://http.cat/411.jpg",
-//         text: "Descrição do nível 1",
-//         minValue: 0,
-//       },
-//       {
-//         title: "Título do nível 2",
-//         image: "https://http.cat/412.jpg",
-//         text: "Descrição do nível 2",
-//         minValue: 50,
-//       },
-//     ],
-//   };
+function getQuestions(i) {
+  let answers = [];
+  let contWrongAnswers = 0;
+  let question = {};
 
-//   // Post: post("endpoint do AXIOS", dados -> neste caso seria o "info")
-//   const promisse = axios.post(
-//     "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes",
-//     info
-//   );
-//   promisse.then((response) => {
-//     const title = response.data.title;
-//     const image = response.data.image;
-//     console.log(title, image);
-//   });
-//   promisse.catch(() =>
-//     console.log("Deu um erro no envio dos dados de Info Basicas")
-//   );
-// }
+  question = {
+    title: document.querySelector(`.title-question-${i}`).value,
+    color: document.querySelector(`.color-question-${i}`).value,
+    answer: answers,
+  };
+
+  const rightAnswer = {
+    text: document.querySelector(`.right-answer-${i}`).value,
+    image: document.querySelector(`.url-answer-${i}`).value,
+    isCorrectAnswer: true,
+  };
+
+  answers.push(rightAnswer);
+
+  while (contWrongAnswers !== 3) {
+    console.log(contWrongAnswers);
+    wrongAnswerValidator = document.querySelector(
+      `.wrong-answer-${contWrongAnswers + 1} input`
+    ).value;
+    contWrongAnswers++;
+  }
+
+  for (let j = 1; j <= contWrongAnswers; j++) {
+    wrongAnswer = {
+      text: document.querySelector(`.wrong-answer-${j} input`).value,
+      image: document.querySelector(`.url-wrong-answer-${j}`).value,
+      isCorrectAnswer: false,
+    };
+    answers.push(wrongAnswer);
+    wrongAnswer = {};
+  }
+  questions.push(question);
+  console.log(questions);
+  question = {};
+}
+function getLevels(j) {
+  // let levels = [];
+  // let contWrongAnswers = 0;
+  let level = {};
+
+  level = {
+    title: document.querySelector(`.level-title-${j}`).value,
+    image: document.querySelector(`.level-url-${j}`).value,
+    text: document.querySelector(`.level-text-area-${j}`).value,
+    minValue: document.querySelector(`.level-minvalue-${j}`).value,
+  };
+  levels.push(level);
+  level = {};
+}
+
+// Tela 3.1 - Info básica do Quiz
+function sendBasicInfo() {
+  const title = document.querySelector(".basic-info-title").value;
+  const image = document.querySelector(".basic-info-image").value;
+  // questions = [];
+
+  for (let i = 1; i <= qtQuestions; i++) {
+    getQuestions(i);
+  }
+
+  for (let j = 1; j <= qtLevels; j++) {
+    getLevels(j);
+  }
+
+  const infoQuizz = {
+    title: title,
+    image: image,
+    questions: questions,
+    levels: levels,
+  };
+  console.log(infoQuizz);
+  //   levels: [
+  //     {
+  //       title: "Título do nível 1",
+  //       image: "https://http.cat/411.jpg",
+  //       text: "Descrição do nível 1",
+  //       minValue: 0,
+  //     },
+  //     {
+  //       title: "Título do nível 2",
+  //       image: "https://http.cat/412.jpg",
+  //       text: "Descrição do nível 2",
+  //       minValue: 50,
+  //     },
+  //   ],
+  // };
+
+  // Post: post("endpoint do AXIOS", dados -> neste caso seria o "info")
+  // const promisse = axios.post(
+  //   "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes",
+  //   info
+  // );
+  // promisse.then((response) => {
+  //   const title = response.data.title;
+  //   const image = response.data.image;
+  //   console.log(title, image);
+  // });
+  // promisse.catch(() =>
+  //   console.log("Deu um erro no envio dos dados de Info Basicas")
+  // );
+}
 // Tela 3.2 - Perguntas do Quiz
 
 /*
@@ -265,7 +299,7 @@ Aí a partir daqui sou eu com o display e listagem, e antes seria você com a cr
 */
 
 /* Tela 1 Lista de Quizzes */
-function display1(){
+function display1() {
   let content;
   let promisseGetQuizzes = axios.get(
     "https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes"
@@ -277,13 +311,13 @@ function display1(){
     //const userQuizzes = JSON.parse(userQuizzesSerialized);
 
     //simulação do que viria do localStorage
-    let quizzExample = {
-      id: 1,
-      title: "Título do quizz",
-      image: "https://http.cat/411.jpg",
-    };
-
-    const userQuizzes = [quizzExample]; //array de objetos, sendo cada objeto um quizz
+    // let quizzExample = {
+    //   id: 1,
+    //   title: "Título do quizz",
+    //   image: "https://http.cat/411.jpg",
+    // };
+    let quizzExample = [];
+    const userQuizzes = quizzExample; //array de objetos, sendo cada objeto um quizz
 
     let quizzes = answer.data;
     content = document.querySelector(".content");
@@ -295,7 +329,7 @@ function display1(){
         <div class="none-quizzes-alert">
           Você não criou nenhum quizz ainda :(
         </div>
-        <div class="button-create-quizz">Criar Quizz</div>
+        <div class="button-create-quizz" onclick="createQuizz(this)">Criar Quizz</div>
       </div>
       <div class="all-quizzes">
         <div class="title-all-quizzes">Todos os Quizzes</div>
@@ -342,6 +376,6 @@ function display1(){
   }
 }
 
-//display1();
+display1();
 
 /* Tela 2 Página de um Quizz */
