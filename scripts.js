@@ -204,7 +204,7 @@ function getQuestions(i) {
   }
 
   for (let j = 1; j <= contWrongAnswers; j++) {
-    let text = document.querySelector(`.wrong-answer-${j} input`).value
+    let text = document.querySelector(`.wrong-answer-${j} input`).value;
 
     if (text !== "") {
       wrongAnswer = {
@@ -221,7 +221,7 @@ function getQuestions(i) {
 }
 function getLevels(j) {
   let level = {};
-  let minvalue = document.querySelector(`.level-minvalue-${j}`).value
+  let minvalue = document.querySelector(`.level-minvalue-${j}`).value;
   level = {
     title: document.querySelector(`.level-title-${j}`).value,
     image: document.querySelector(`.level-url-${j}`).value,
@@ -249,22 +249,30 @@ function sendBasicInfo() {
     image: image,
     questions: questions,
     levels: levels,
-  }
+  };
 
   // Post: post("endpoint do AXIOS", dados -> neste caso seria o "info")
-  const promisse = axios.post("https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes",infoQuizz);
-  promisse.then(() => {
-    console.log("deu boa");
-  });
-  promisse.catch(() =>{
-    console.log(infoQuizz)
-    console.log("Deu um erro no envio dos dados de Info Basicas")
-  }
+  const promisse = axios.post(
+    "https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes",
+    infoQuizz
   );
+  promisse.then((data) => {
+    const response = data
+    const quizzInfos = {
+      id: response.data.id,
+      title: infoQuizz.title,
+      image: infoQuizz.image,
+    };
+    const serializedInfo = JSON.stringify(quizzInfos);
+    // Chave para pegar do localStorage: "userQuizzes", Data: serializeInfo
+    localStorage.setItem("userQuizzes", serializedInfo)
+  });
+  promisse.catch(() => {
+    console.log("Deu um erro no envio dos dados de Info Basicas");
+  });
 }
 
-// Tela 3.2 - Perguntas do Quiz
-
+function serializarDados() {}
 /*
 
 ------------------------------------------------------------------------------------------------------------
@@ -279,7 +287,6 @@ Aí a partir daqui sou eu com o display e listagem, e antes seria você com a cr
 
 display1();
 
-
 /* Tela 1 Lista de Quizzes */
 function display1() {
   let content;
@@ -292,7 +299,7 @@ function display1() {
     //const userQuizzesSerialized = localStorage.getItem("userQuizzes");
     //const userQuizzes = JSON.parse(userQuizzesSerialized);
 
-    //simulação do que viria do localStorage
+    // simulação do que viria do localStorage
     // let quizzExample = {
     //   id: 1,
     //   title: "Título do quizz",
@@ -360,17 +367,18 @@ function display1() {
 
 /* Tela 2 Página de um Quizz */
 
-function display2(quizzClickedDiv){
-  
-  for(let i=0; i<10000; i++){
-    if(quizzClickedDiv.classList.contains(`q${i}`) === true){
+function display2(quizzClickedDiv) {
+  for (let i = 0; i < 10000; i++) {
+    if (quizzClickedDiv.classList.contains(`q${i}`) === true) {
       let idClicked = i;
-      let promisseGetQuizzClicked = axios.get(`https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/${idClicked}`);
+      let promisseGetQuizzClicked = axios.get(
+        `https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/${idClicked}`
+      );
       promisseGetQuizzClicked.then(displayTheQuizzClicked);
     }
   }
 
-  function displayTheQuizzClicked(answer){
+  function displayTheQuizzClicked(answer) {
     let quizzClicked = answer.data;
     content = document.querySelector(".content");
 
@@ -396,9 +404,11 @@ function display2(quizzClickedDiv){
     <div class="button-back-home" onclick="display1()">Voltar pra home</div>
     `;
     let clickedQuizzQuestionsArray = quizzClicked.questions;
-    let clickedQuizzQuestionsList = document.querySelector(".questions-in-quizz");
-    for(let i = 0; i<clickedQuizzQuestionsArray.length; i++){
-      clickedQuizzQuestionsList.innerHTML+=`
+    let clickedQuizzQuestionsList = document.querySelector(
+      ".questions-in-quizz"
+    );
+    for (let i = 0; i < clickedQuizzQuestionsArray.length; i++) {
+      clickedQuizzQuestionsList.innerHTML += `
       <div class="question-in-quizz">
         <div style="background-color:${clickedQuizzQuestionsArray[i].color}" class="title-question-in-quizz">
           <p>${clickedQuizzQuestionsArray[i].title}</p>
@@ -407,10 +417,13 @@ function display2(quizzClickedDiv){
       </div>
       `;
       let clickedQuizzAnswersArray = clickedQuizzQuestionsArray[i].answers;
-      let clickedQuizzAnswersList = document.querySelector(`.answers-question-in-quizz${i}`);
-      let clickedQuizzAnswersArraySort = clickedQuizzAnswersArray.sort(comparador);
-      for(let j = 0; j<clickedQuizzAnswersArray.length; j++){
-        clickedQuizzAnswersList.innerHTML+=`
+      let clickedQuizzAnswersList = document.querySelector(
+        `.answers-question-in-quizz${i}`
+      );
+      let clickedQuizzAnswersArraySort =
+        clickedQuizzAnswersArray.sort(comparador);
+      for (let j = 0; j < clickedQuizzAnswersArray.length; j++) {
+        clickedQuizzAnswersList.innerHTML += `
       <div class="answer-question-in-quizz">
         <img src="${clickedQuizzAnswersArraySort[j].image}">
         <p>${clickedQuizzAnswersArraySort[j].text}</p>
@@ -419,18 +432,11 @@ function display2(quizzClickedDiv){
       }
     }
 
-
-
-
-
-
-
     let clickedQuizzLevelsArray = quizzClicked.levels;
     let clickedQuizzLevelsList = document.querySelector(".quizz-sucess-report");
-
   }
 }
 
-function comparador() { 
-	return Math.random() - 0.5; 
+function comparador() {
+  return Math.random() - 0.5;
 }
