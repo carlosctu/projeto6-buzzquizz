@@ -1,9 +1,23 @@
 /* você aqui */
 // Criação do Quizz
 // Navegação entre páginas
-let qtQuestions, qtLevels;
+let qtQuestions,
+  qtLevels,
+  quizzSelectedObject,
+  idClicked,
+  quizzClicked,
+  counterFalse,
+  counterTrue,
+  scrollCounter,
+  counterComputedQuestions;
+// let counterFalse = 0;
+// let counterTrue = 0;
+// let scrollCounter = 0;
+// let counterComputedQuestions = 0;
 const questions = [];
 const levels = [];
+
+display1();
 
 function createQuizz(element) {
   const hideContent = element.parentNode.parentNode.parentNode;
@@ -176,7 +190,6 @@ function openLevel(element) {
     allQuestions[parent.classList[1] - 1].classList.add("opened-level");
   }
 }
-
 function getQuestions(i) {
   let answers = [];
   let contWrongAnswers = 0;
@@ -234,7 +247,6 @@ function getLevels(j) {
   levels.push(level);
   level = {};
 }
-
 function sendBasicInfo() {
   const title = document.querySelector(".basic-info-title").value;
   const image = document.querySelector(".basic-info-image").value;
@@ -283,18 +295,12 @@ function sendBasicInfo() {
 }
 
 /*
-
 ------------------------------------------------------------------------------------------------------------
-
 Podemos separar somente o código do JS com esse comentário, pode ficar mais organizado para cada um de nós.
 Mas depois quando formos entregar, a gente retira esse comentário aqui.
 Aí a partir daqui sou eu com o display e listagem, e antes seria você com a criação do quizz.
-
 ------------------------------------------------------------------------------------------------------------
-
 */
-
-display1();
 
 /* Tela 1 Lista de Quizzes */
 function display1() {
@@ -369,12 +375,7 @@ function display1() {
     }
   }
 }
-
 /* Tela 2 Página de um Quizz */
-
-let quizzSelectedObject;
-let idClicked;
-let quizzClicked;
 
 function display2(quizzClickedDiv) {
   counterFalse = 0;
@@ -450,10 +451,6 @@ function display2(quizzClickedDiv) {
     }
   }
 }
-let counterFalse = 0;
-let counterTrue = 0;
-let scrollCounter = 0;
-let counterComputedQuestions = 0;
 function calculateQuizzSuccess(answerClickedDiv) {
   if (answerClickedDiv.classList.contains("correct-answer") === true) {
     answerClickedDiv.onclick = null;
@@ -519,21 +516,17 @@ function calculateQuizzSuccess(answerClickedDiv) {
     `;
     setTimeout(scrollerSuccess, 2000);
     function scrollerSuccess() {
-      document
-        .querySelector(".quizz-sucess-report")
-        .scrollIntoView({
-          block: "end",
-          inline: "nearest",
-          behavior: "smooth",
-        });
+      document.querySelector(".quizz-sucess-report").scrollIntoView({
+        block: "end",
+        inline: "nearest",
+        behavior: "smooth",
+      });
     }
   }
 }
-
 function comparador() {
   return Math.random() - 0.5;
 }
-
 function reset() {
   window.location.reload();
 }
