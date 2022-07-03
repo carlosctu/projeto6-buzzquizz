@@ -17,7 +17,6 @@ function goHome(element) {
 }
 function nextPage(element) {
   const section = element.parentNode.classList;
-  console.log(section);
   element.parentNode.classList.add("hidden");
   if (section.contains("basic-info")) {
     document.querySelector(".quiz-questions").classList.remove("hidden");
@@ -186,7 +185,7 @@ function getQuestions(i) {
   question = {
     title: document.querySelector(`.title-question-${i}`).value,
     color: document.querySelector(`.color-question-${i}`).value,
-    answer: answers,
+    answers: answers,
   };
 
   const rightAnswer = {
@@ -198,7 +197,6 @@ function getQuestions(i) {
   answers.push(rightAnswer);
 
   while (contWrongAnswers !== 3) {
-    console.log(contWrongAnswers);
     wrongAnswerValidator = document.querySelector(
       `.wrong-answer-${contWrongAnswers + 1} input`
     ).value;
@@ -206,28 +204,31 @@ function getQuestions(i) {
   }
 
   for (let j = 1; j <= contWrongAnswers; j++) {
-    wrongAnswer = {
-      text: document.querySelector(`.wrong-answer-${j} input`).value,
-      image: document.querySelector(`.url-wrong-answer-${j}`).value,
-      isCorrectAnswer: false,
-    };
-    answers.push(wrongAnswer);
+    let text = document.querySelector(`.wrong-answer-${j} input`).value
+    
+    if (text !== "") {
+      wrongAnswer = {
+        text: text,
+        image: document.querySelector(`.url-wrong-answer-${j}`).value,
+        isCorrectAnswer: false,
+      };
+      answers.push(wrongAnswer);
+    }
     wrongAnswer = {};
   }
   questions.push(question);
-  console.log(questions);
   question = {};
 }
 function getLevels(j) {
   // let levels = [];
   // let contWrongAnswers = 0;
   let level = {};
-
+  let minvalue = document.querySelector(`.level-minvalue-${j}`).value
   level = {
     title: document.querySelector(`.level-title-${j}`).value,
     image: document.querySelector(`.level-url-${j}`).value,
     text: document.querySelector(`.level-text-area-${j}`).value,
-    minValue: document.querySelector(`.level-minvalue-${j}`).value,
+    minValue: parseInt(minvalue),
   };
   levels.push(level);
   level = {};
@@ -252,37 +253,86 @@ function sendBasicInfo() {
     image: image,
     questions: questions,
     levels: levels,
-  };
-  console.log(infoQuizz);
+  // };
+  // const infoQuizz = {
+  //   title: "Título do quizz",
+  //   image: "https://http.cat/411.jpg",
+  //   questions: [
+  //     {
+  //       title: "Título da pergunta 1",
+  //       color: "#123456",
+  //       answers: [
+  //         {
+  //           text: "Texto da resposta 1",
+  //           image: "https://http.cat/411.jpg",
+  //           isCorrectAnswer: true
+  //         },
+  //         {
+  //           text: "Texto da resposta 2",
+  //           image: "https://http.cat/412.jpg",
+  //           isCorrectAnswer: false
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       title: "Título da pergunta 2",
+  //       color: "#123456",
+  //       answers: [
+  //         {
+  //           text: "Texto da resposta 1",
+  //           image: "https://http.cat/411.jpg",
+  //           isCorrectAnswer: true
+  //         },
+  //         {
+  //           text: "Texto da resposta 2",
+  //           image: "https://http.cat/412.jpg",
+  //           isCorrectAnswer: false
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       title: "Título da pergunta 3",
+  //       color: "#123456",
+  //       answers: [
+  //         {
+  //           text: "Texto da resposta 1",
+  //           image: "https://http.cat/411.jpg",
+  //           isCorrectAnswer: true
+  //         },
+  //         {
+  //           text: "Texto da resposta 2",
+  //           image: "https://http.cat/412.jpg",
+  //           isCorrectAnswer: false
+  //         }
+  //       ]
+  //     }
+  //   ],
   //   levels: [
   //     {
   //       title: "Título do nível 1",
   //       image: "https://http.cat/411.jpg",
   //       text: "Descrição do nível 1",
-  //       minValue: 0,
+  //       minValue: 0
   //     },
   //     {
   //       title: "Título do nível 2",
   //       image: "https://http.cat/412.jpg",
   //       text: "Descrição do nível 2",
-  //       minValue: 50,
-  //     },
-  //   ],
-  // };
+  //       minValue: 50
+  //     }
+  //   ]
+  }
 
   // Post: post("endpoint do AXIOS", dados -> neste caso seria o "info")
-  // const promisse = axios.post(
-  //   "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes",
-  //   info
-  // );
-  // promisse.then((response) => {
-  //   const title = response.data.title;
-  //   const image = response.data.image;
-  //   console.log(title, image);
-  // });
-  // promisse.catch(() =>
-  //   console.log("Deu um erro no envio dos dados de Info Basicas")
-  // );
+  const promisse = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes",infoQuizz);
+  promisse.then(() => {
+    console.log("deu boa");
+  });
+  promisse.catch(() =>{
+    console.log(infoQuizz)
+    console.log("Deu um erro no envio dos dados de Info Basicas")
+  }
+  );
 }
 // Tela 3.2 - Perguntas do Quiz
 
@@ -379,11 +429,6 @@ function display1() {
   }
 }
 
-<<<<<<< HEAD
-display1();
-
-=======
->>>>>>> 66e8ca73ac54dd456efc9aef44b2e3f15f761658
 /* Tela 2 Página de um Quizz */
 
 function display2(quizzClickedDiv){
