@@ -369,11 +369,18 @@ function display1() {
 /* Tela 2 Página de um Quizz */
 
 let quizzSelectedObject;
+let idClicked;
+let quizzClicked;
 
 function display2(quizzClickedDiv) {
+  counterFalse = 0;
+  counterTrue = 0;
+  scrollCounter = 0;
+  counterComputedQuestions = 0;
+
   for (let i = 0; i < 10000; i++) {
     if (quizzClickedDiv.classList.contains(`q${i}`) === true) {
-      let idClicked = i;
+      idClicked = i;
       let promisseGetQuizzClicked = axios.get(
         `https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/${idClicked}`
       );
@@ -383,8 +390,9 @@ function display2(quizzClickedDiv) {
 
   function displayTheQuizzClicked(answer) {
     quizzSelectedObject = answer.data;
-    let quizzClicked = answer.data;
+    quizzClicked = answer.data;
     content = document.querySelector(".content");
+    content.scrollIntoView({block: "start", inline: "nearest", behavior: "smooth"});
 
     content.innerHTML = `
     <div class="title-in-quizz">
@@ -393,19 +401,6 @@ function display2(quizzClickedDiv) {
       <div class="title-in-quizz-gradient"></div>
     </div>
     <div class="questions-in-quizz"></div>
-    
-    <div class="quizz-sucess-report">
-      <div class="title-quizz-sucess-report">
-        <p>Título do nível 1</p>
-      </div>
-      <div class="description-quizz-sucess-report">
-        <img src="https://http.cat/411.jpg">
-        <p>Descrição do nível 1</p>
-      </div>
-    </div>
-
-    <div class="button-reset-quizz">Reiniciar Quizz</div>
-    <div class="button-back-home" onclick="display1()">Voltar pra home</div>
     `;
     let clickedQuizzQuestionsArray = quizzClicked.questions;
     let clickedQuizzQuestionsList = document.querySelector(
@@ -450,6 +445,7 @@ function display2(quizzClickedDiv) {
 let counterFalse = 0;
 let counterTrue = 0;
 let scrollCounter = 0;
+let counterComputedQuestions = 0;
 function calculateQuizzSuccess(answerClickedDiv){
   if(answerClickedDiv.classList.contains('correct-answer') === true){
     answerClickedDiv.onclick=null;
@@ -461,6 +457,7 @@ function calculateQuizzSuccess(answerClickedDiv){
       answer.onclick=null;
     });
     counterTrue++;
+    counterComputedQuestions++;
     divQuestionsIn.onclick=null;
   }
   if(answerClickedDiv.classList.contains('incorrect-answer') === true){
@@ -475,18 +472,40 @@ function calculateQuizzSuccess(answerClickedDiv){
     divQuestionsIn.querySelector('.correct-answer').classList.add('answer-question-in-quizz-true-nonselected');
     divQuestionsIn.querySelector('.correct-answer').onclick=null;
     counterFalse++;
+    counterComputedQuestions++;
   }
   let questionIn = document.querySelectorAll(".question-in-quizz");
   if(scrollCounter < questionIn.length-1){
     scrollCounter++;
-    questionIn[scrollCounter].scrollIntoView({block: "end", inline: "nearest", behavior: "smooth"});
+    setTimeout(scrollerQuestions,2000);
+    function scrollerQuestions(){
+      questionIn[scrollCounter].scrollIntoView({block: "end", inline: "nearest", behavior: "smooth"});
+    }
   }
+  if(counterComputedQuestions === questionIn.length){
+    content = document.querySelector(".content");
+    percentSucess = ((counterTrue)/(counterTrue+counterFalse))*100;
+    percentSucessFixed = Math.round(percentSucess);
+    let clickedQuizzLevelsArray = quizzClicked.levels;
+    content.innerHTML += `
+    <div class="quizz-sucess-report">
+      <div class="title-quizz-sucess-report">
+        <p>${percentSucessFixed}% de acerto: ${clickedQuizzLevelsArray[1].title}</p>
+      </div>
+      <div class="description-quizz-sucess-report">
+        <img src="${clickedQuizzLevelsArray[1].image}">
+        <p>${clickedQuizzLevelsArray[1].text}</p>
+      </div>
+    </div>
 
-
-
-
-  //let clickedQuizzLevelsArray = quizzClicked.levels;
-  //let clickedQuizzLevelsList = document.querySelector(".quizz-sucess-report");
+    <div class="button-reset-quizz q${idClicked}" onclick="display2(this)">Reiniciar Quizz</div>
+    <div class="button-back-home" onclick="display1()">Voltar pra home</div>
+    `;
+    setTimeout(scrollerSuccess,2000);
+    function scrollerSuccess(){
+      document.querySelector('.quizz-sucess-report').scrollIntoView({block: "end", inline: "nearest", behavior: "smooth"});
+    }
+  }
 }
 
 function comparador() {
