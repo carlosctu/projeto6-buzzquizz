@@ -204,12 +204,9 @@ function getQuestions(i) {
   }
 
   for (let j = 1; j <= contWrongAnswers; j++) {
-    // console.log(`.question-${j} wrong-answer-${j}`)
     let text = document.querySelector(
       `.question-${i} .wrong-answer-${j} input`
     ).value;
-    console.log("O texto desta vez foi: " + text);
-    // alert(text)
     if (text !== "") {
       let wrongAnswer = {
         text: text,
@@ -217,8 +214,6 @@ function getQuestions(i) {
           .value,
         isCorrectAnswer: false,
       };
-      // console.log(wrongAnswer.image);
-      console.log(wrongAnswer);
       answers.push(wrongAnswer);
     }
     wrongAnswer = {};
@@ -310,39 +305,8 @@ function display1() {
   promisseGetQuizzes.then(displayTheQuizzes);
 
   function displayTheQuizzes(answer) {
-<<<<<<< HEAD
-    // let userQuizzes = [];
     const deserializedInfo = localStorage.getItem("userQuizzes");
     const list = JSON.parse(deserializedInfo);
-    console.log(list);
-    // userQuizzes.push(list);
-    // alert(userQuizzes)
-=======
-    
->>>>>>> b7c3df284b66368d2f06bcc6967a001c3c5137be
-    //const userQuizzesSerialized = localStorage.getItem("userQuizzes");
-    //const userQuizzes = JSON.parse(userQuizzesSerialized);
-
-    // simulação do que viria do localStorage
-<<<<<<< HEAD
-    // let quizzExample = {
-    //   id: 1,
-    //   title: "Título do quizz",
-    //   image: "https://http.cat/411.jpg",
-    // };
-=======
-     let quizzExample = {
-       id: 1,
-       title: "Título do quizz",
-       image: "https://http.cat/411.jpg",
-     };
-    //let quizzExample = [];
-    const userQuizzes = [quizzExample]; //array de objetos, sendo cada objeto um quizz
->>>>>>> b7c3df284b66368d2f06bcc6967a001c3c5137be
-
-    // let quizzExample = [];
-    // const userQuizzes = quizzExample; //array de objetos, sendo cada objeto um quizz
-    console.log(list);
     let quizzes = answer.data;
     content = document.querySelector(".content");
 
@@ -372,16 +336,10 @@ function display1() {
         `;
       }
     } else {
-      // if (list.length !== 0) {
       content.innerHTML = `
       <div class="user-quizzes">
-<<<<<<< HEAD
         <div class="title-user-quizzes">  
           <p>Seus Quizzes</p><button onclick="createQuizz(this)"><ion-icon name="add-circle"></ion-icon></button>
-=======
-        <div class="title-user-quizzes">
-          Seus Quizzes <ion-icon name="add-circle" onclick="createQuizz(this)"></ion-icon>
->>>>>>> b7c3df284b66368d2f06bcc6967a001c3c5137be
         </div>
         <div class="user-quizzes-list"></div>
       </div>
@@ -392,9 +350,7 @@ function display1() {
       `;
 
       let displayUserList = document.querySelector(".user-quizzes-list");
-      console.log(list.length);
       for (let i = 0; i < list.length; i++) {
-        console.log("caiu aqui");
         displayUserList.innerHTML += `
         <div class="quizz q${list[i].id}" onclick="display2(this)">
           <img src="${list[i].image}" class="quizz-image">
@@ -410,7 +366,6 @@ function display1() {
         <div class="quizz q${quizzes[i].id}" onclick="display2(this)"><img src="${quizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${quizzes[i].title}</p></div>
         `;
       }
-      // }
     }
   }
 }
@@ -441,7 +396,11 @@ function display2(quizzClickedDiv) {
     quizzSelectedObject = answer.data;
     quizzClicked = answer.data;
     content = document.querySelector(".content");
-    content.scrollIntoView({block: "start", inline: "nearest", behavior: "smooth"});
+    content.scrollIntoView({
+      block: "start",
+      inline: "nearest",
+      behavior: "smooth",
+    });
 
     content.innerHTML = `
     <div class="title-in-quizz">
@@ -450,22 +409,6 @@ function display2(quizzClickedDiv) {
       <div class="title-in-quizz-gradient"></div>
     </div>
     <div class="questions-in-quizz"></div>
-<<<<<<< HEAD
-    
-    <div class="quizz-sucess-report">
-      <div class="title-quizz-sucess-report">
-        <p>Título do nível 1</p>
-      </div>
-      <div class="description-quizz-sucess-report">
-        <img src="https://http.cat/411.jpg">
-        <p>Descrição do nível 1</p>
-      </div>
-    </div>
-
-    <div class="button-reset-quizz">Reiniciar Quizz</div>
-    <div class="button-back-home" onclick="reset()">Voltar pra home</div>
-=======
->>>>>>> b7c3df284b66368d2f06bcc6967a001c3c5137be
     `;
     let clickedQuizzQuestionsArray = quizzClicked.questions;
     let clickedQuizzQuestionsList = document.querySelector(
@@ -487,7 +430,7 @@ function display2(quizzClickedDiv) {
       let clickedQuizzAnswersArraySort =
         clickedQuizzAnswersArray.sort(comparador);
       for (let j = 0; j < clickedQuizzAnswersArray.length; j++) {
-        if(clickedQuizzAnswersArraySort[j].isCorrectAnswer === true){
+        if (clickedQuizzAnswersArraySort[j].isCorrectAnswer === true) {
           clickedQuizzAnswersList.innerHTML += `
           <div class="answer-question-in-quizz correct-answer" onclick="calculateQuizzSuccess(this)">
             <img src="${clickedQuizzAnswersArraySort[j].image}">
@@ -495,7 +438,7 @@ function display2(quizzClickedDiv) {
           </div>
             `;
         }
-        if(clickedQuizzAnswersArraySort[j].isCorrectAnswer === false){
+        if (clickedQuizzAnswersArraySort[j].isCorrectAnswer === false) {
           clickedQuizzAnswersList.innerHTML += `
           <div class="answer-question-in-quizz incorrect-answer" onclick="calculateQuizzSuccess(this)">
             <img src="${clickedQuizzAnswersArraySort[j].image}">
@@ -511,45 +454,53 @@ let counterFalse = 0;
 let counterTrue = 0;
 let scrollCounter = 0;
 let counterComputedQuestions = 0;
-function calculateQuizzSuccess(answerClickedDiv){
-  if(answerClickedDiv.classList.contains('correct-answer') === true){
-    answerClickedDiv.onclick=null;
-    answerClickedDiv.classList.add('answer-question-in-quizz-true');
+function calculateQuizzSuccess(answerClickedDiv) {
+  if (answerClickedDiv.classList.contains("correct-answer") === true) {
+    answerClickedDiv.onclick = null;
+    answerClickedDiv.classList.add("answer-question-in-quizz-true");
     let divQuestionsIn = answerClickedDiv.parentNode;
-    const falseAnswersArray = divQuestionsIn.querySelectorAll('.incorrect-answer');
+    const falseAnswersArray =
+      divQuestionsIn.querySelectorAll(".incorrect-answer");
     falseAnswersArray.forEach((answer) => {
-      answer.classList.add('answer-question-in-quizz-false');
-      answer.onclick=null;
+      answer.classList.add("answer-question-in-quizz-false");
+      answer.onclick = null;
     });
     counterTrue++;
     counterComputedQuestions++;
-    divQuestionsIn.onclick=null;
+    divQuestionsIn.onclick = null;
   }
-  if(answerClickedDiv.classList.contains('incorrect-answer') === true){
-    answerClickedDiv.onclick=null;
+  if (answerClickedDiv.classList.contains("incorrect-answer") === true) {
+    answerClickedDiv.onclick = null;
     let divQuestionsIn = answerClickedDiv.parentNode;
-    const falseAnswersArray = divQuestionsIn.querySelectorAll('.incorrect-answer');
+    const falseAnswersArray =
+      divQuestionsIn.querySelectorAll(".incorrect-answer");
     falseAnswersArray.forEach((answer) => {
-      answer.classList.add('answer-question-in-quizz-false');
-      answer.onclick=null;
+      answer.classList.add("answer-question-in-quizz-false");
+      answer.onclick = null;
     });
-    answerClickedDiv.classList.add('answer-question-in-quizz-false-selected');
-    divQuestionsIn.querySelector('.correct-answer').classList.add('answer-question-in-quizz-true-nonselected');
-    divQuestionsIn.querySelector('.correct-answer').onclick=null;
+    answerClickedDiv.classList.add("answer-question-in-quizz-false-selected");
+    divQuestionsIn
+      .querySelector(".correct-answer")
+      .classList.add("answer-question-in-quizz-true-nonselected");
+    divQuestionsIn.querySelector(".correct-answer").onclick = null;
     counterFalse++;
     counterComputedQuestions++;
   }
   let questionIn = document.querySelectorAll(".question-in-quizz");
-  if(scrollCounter < questionIn.length-1){
+  if (scrollCounter < questionIn.length - 1) {
     scrollCounter++;
-    setTimeout(scrollerQuestions,2000);
-    function scrollerQuestions(){
-      questionIn[scrollCounter].scrollIntoView({block: "end", inline: "nearest", behavior: "smooth"});
+    setTimeout(scrollerQuestions, 2000);
+    function scrollerQuestions() {
+      questionIn[scrollCounter].scrollIntoView({
+        block: "end",
+        inline: "nearest",
+        behavior: "smooth",
+      });
     }
   }
-  if(counterComputedQuestions === questionIn.length){
+  if (counterComputedQuestions === questionIn.length) {
     content = document.querySelector(".content");
-    percentSucess = ((counterTrue)/(counterTrue+counterFalse))*100;
+    percentSucess = (counterTrue / (counterTrue + counterFalse)) * 100;
     percentSucessFixed = Math.round(percentSucess);
     let clickedQuizzLevelsArray = quizzClicked.levels;
     content.innerHTML += `
@@ -564,11 +515,17 @@ function calculateQuizzSuccess(answerClickedDiv){
     </div>
 
     <div class="button-reset-quizz q${idClicked}" onclick="display2(this)">Reiniciar Quizz</div>
-    <div class="button-back-home" onclick="display1()">Voltar pra home</div>
+    <div class="button-back-home" onclick="reset()">Voltar pra home</div>
     `;
-    setTimeout(scrollerSuccess,2000);
-    function scrollerSuccess(){
-      document.querySelector('.quizz-sucess-report').scrollIntoView({block: "end", inline: "nearest", behavior: "smooth"});
+    setTimeout(scrollerSuccess, 2000);
+    function scrollerSuccess() {
+      document
+        .querySelector(".quizz-sucess-report")
+        .scrollIntoView({
+          block: "end",
+          inline: "nearest",
+          behavior: "smooth",
+        });
     }
   }
 }
