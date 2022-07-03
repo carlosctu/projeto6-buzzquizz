@@ -296,17 +296,18 @@ function display1() {
   promisseGetQuizzes.then(displayTheQuizzes);
 
   function displayTheQuizzes(answer) {
+    
     //const userQuizzesSerialized = localStorage.getItem("userQuizzes");
     //const userQuizzes = JSON.parse(userQuizzesSerialized);
 
     // simulação do que viria do localStorage
-    // let quizzExample = {
-    //   id: 1,
-    //   title: "Título do quizz",
-    //   image: "https://http.cat/411.jpg",
-    // };
-    let quizzExample = [];
-    const userQuizzes = quizzExample; //array de objetos, sendo cada objeto um quizz
+     let quizzExample = {
+       id: 1,
+       title: "Título do quizz",
+       image: "https://http.cat/411.jpg",
+     };
+    //let quizzExample = [];
+    const userQuizzes = [quizzExample]; //array de objetos, sendo cada objeto um quizz
 
     let quizzes = answer.data;
     content = document.querySelector(".content");
@@ -338,7 +339,7 @@ function display1() {
       content.innerHTML = `
       <div class="user-quizzes">
         <div class="title-user-quizzes">
-          Seus Quizzes <ion-icon name="add-circle"></ion-icon>
+          Seus Quizzes <ion-icon name="add-circle" onclick="createQuizz(this)"></ion-icon>
         </div>
         <div class="user-quizzes-list"></div>
       </div>
@@ -423,18 +424,57 @@ function display2(quizzClickedDiv) {
       let clickedQuizzAnswersArraySort =
         clickedQuizzAnswersArray.sort(comparador);
       for (let j = 0; j < clickedQuizzAnswersArray.length; j++) {
-        clickedQuizzAnswersList.innerHTML += `
-      <div class="answer-question-in-quizz">
-        <img src="${clickedQuizzAnswersArraySort[j].image}">
-        <p>${clickedQuizzAnswersArraySort[j].text}</p>
-      </div>
-        `;
+        if(clickedQuizzAnswersArraySort[j].isCorrectAnswer === true){
+          clickedQuizzAnswersList.innerHTML += `
+          <div class="answer-question-in-quizz correct-answer" onclick="calculateQuizzSuccess(this)">
+            <img src="${clickedQuizzAnswersArraySort[j].image}">
+            <p>${clickedQuizzAnswersArraySort[j].text}</p>
+          </div>
+            `;
+        }
+        if(clickedQuizzAnswersArraySort[j].isCorrectAnswer === false){
+          clickedQuizzAnswersList.innerHTML += `
+          <div class="answer-question-in-quizz incorrect-answer" onclick="calculateQuizzSuccess(this)">
+            <img src="${clickedQuizzAnswersArraySort[j].image}">
+            <p>${clickedQuizzAnswersArraySort[j].text}</p>
+          </div>
+            `;
+        }
       }
     }
-
-    let clickedQuizzLevelsArray = quizzClicked.levels;
-    let clickedQuizzLevelsList = document.querySelector(".quizz-sucess-report");
   }
+}
+
+function calculateQuizzSuccess(answerClickedDiv){
+  let counterFalse = 0;
+  let counterTrue = 0;
+  if(answerClickedDiv.classList.contains('correct-answer') === true){
+    answerClickedDiv.classList.add('answer-question-in-quizz-true');
+    let divQuestionsIn = answerClickedDiv.parentNode;
+    
+    const falseAnswersArray = divQuestionsIn.querySelectorAll('.incorrect-answer');
+    
+    falseAnswersArray.forEach((answer) => {
+      answer.classList.add('answer-question-in-quizz-false');
+    });
+    counterTrue++;
+  }
+  if(answerClickedDiv.classList.contains('incorrect-answer') === true){
+    let divQuestionsIn = answerClickedDiv.parentNode;
+    const falseAnswersArray = divQuestionsIn.querySelectorAll('.incorrect-answer');
+    falseAnswersArray.forEach((answer) => {
+      answer.classList.add('answer-question-in-quizz-false');
+    });
+    answerClickedDiv.classList.add('answer-question-in-quizz-false-selected');
+    divQuestionsIn.querySelector('.correct-answer').classList.add('answer-question-in-quizz-false');;
+    counterFalse++;
+  }
+
+
+
+
+  let clickedQuizzLevelsArray = quizzClicked.levels;
+  let clickedQuizzLevelsList = document.querySelector(".quizz-sucess-report");
 }
 
 function comparador() {

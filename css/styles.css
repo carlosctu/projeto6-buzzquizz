@@ -695,6 +695,20 @@ body input[value=""]{
   width: 330px;
 }
 
+.answer-question-in-quizz-true{
+  color: #009C22;
+}
+
+.answer-question-in-quizz-false{
+  color: #FF4B4B;
+  opacity: 0.3;
+}
+
+.answer-question-in-quizz-false-selected{
+  opacity: 1;
+  color: #FF4B4B;
+}
+
 .answer-question-in-quizz p{
   margin-top: 10px;
   font-weight: 700;
