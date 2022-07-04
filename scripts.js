@@ -10,10 +10,6 @@ let qtQuestions,
   counterTrue,
   scrollCounter,
   counterComputedQuestions;
-// let counterFalse = 0;
-// let counterTrue = 0;
-// let scrollCounter = 0;
-// let counterComputedQuestions = 0;
 const questions = [];
 const levels = [];
 
@@ -247,10 +243,14 @@ function getLevels(j) {
   levels.push(level);
   level = {};
 }
+function getUserQuizzImg() {
+  
+}
 function sendBasicInfo() {
   const title = document.querySelector(".basic-info-title").value;
   const image = document.querySelector(".basic-info-image").value;
-
+  const quizCreatedScreen = document.querySelector(".sucess-image")
+  quizCreatedScreen.innerHTML = `<img src="${image}" alt="User quiz image" /><div class="success-quiz-title"><p>${title}</p></div>`
   for (let i = 1; i <= qtQuestions; i++) {
     getQuestions(i);
   }
