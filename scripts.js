@@ -1,9 +1,23 @@
 /* você aqui */
 // Criação do Quizz
 // Navegação entre páginas
-let qtQuestions, qtLevels;
+let qtQuestions,
+  qtLevels,
+  quizzSelectedObject,
+  idClicked,
+  quizzClicked,
+  counterFalse,
+  counterTrue,
+  scrollCounter,
+  counterComputedQuestions;
+// let counterFalse = 0;
+// let counterTrue = 0;
+// let scrollCounter = 0;
+// let counterComputedQuestions = 0;
 const questions = [];
 const levels = [];
+
+display1();
 
 function createQuizz(element) {
   const hideContent = element.parentNode.parentNode.parentNode;
@@ -176,7 +190,6 @@ function openLevel(element) {
     allQuestions[parent.classList[1] - 1].classList.add("opened-level");
   }
 }
-
 function getQuestions(i) {
   let answers = [];
   let contWrongAnswers = 0;
@@ -204,12 +217,14 @@ function getQuestions(i) {
   }
 
   for (let j = 1; j <= contWrongAnswers; j++) {
-    let text = document.querySelector(`.wrong-answer-${j} input`).value;
-
+    let text = document.querySelector(
+      `.question-${i} .wrong-answer-${j} input`
+    ).value;
     if (text !== "") {
-      wrongAnswer = {
+      let wrongAnswer = {
         text: text,
-        image: document.querySelector(`.url-wrong-answer-${j}`).value,
+        image: document.querySelector(`.question-${i} .url-wrong-answer-${j}`)
+          .value,
         isCorrectAnswer: false,
       };
       answers.push(wrongAnswer);
@@ -217,6 +232,7 @@ function getQuestions(i) {
     wrongAnswer = {};
   }
   questions.push(question);
+  answers = [];
   question = {};
 }
 function getLevels(j) {
@@ -231,7 +247,6 @@ function getLevels(j) {
   levels.push(level);
   level = {};
 }
-
 function sendBasicInfo() {
   const title = document.querySelector(".basic-info-title").value;
   const image = document.querySelector(".basic-info-image").value;
@@ -257,35 +272,35 @@ function sendBasicInfo() {
     infoQuizz
   );
   promisse.then((data) => {
-    const response = data
-    const quizzInfos = {
+    let userQuizzes = [];
+    const deserializedInfo = localStorage.getItem("userQuizzes");
+    let list = JSON.parse(deserializedInfo);
+    if (list !== null) {
+      userQuizzes = list;
+    }
+    const response = data;
+    let quizzInfos = {
       id: response.data.id,
-      title: infoQuizz.title,
-      image: infoQuizz.image,
+      title: response.data.title,
+      image: response.data.image,
     };
-    const serializedInfo = JSON.stringify(quizzInfos);
+    userQuizzes.push(quizzInfos);
+    let serializedInfo = JSON.stringify(userQuizzes);
     // Chave para pegar do localStorage: "userQuizzes", Data: serializeInfo
-    localStorage.setItem("userQuizzes", serializedInfo)
+    localStorage.setItem("userQuizzes", serializedInfo);
   });
   promisse.catch(() => {
     console.log("Deu um erro no envio dos dados de Info Basicas");
   });
 }
 
-function serializarDados() {}
 /*
-
 ------------------------------------------------------------------------------------------------------------
-
 Podemos separar somente o código do JS com esse comentário, pode ficar mais organizado para cada um de nós.
 Mas depois quando formos entregar, a gente retira esse comentário aqui.
 Aí a partir daqui sou eu com o display e listagem, e antes seria você com a criação do quizz.
-
 ------------------------------------------------------------------------------------------------------------
-
 */
-
-display1();
 
 /* Tela 1 Lista de Quizzes */
 function display1() {
@@ -296,23 +311,12 @@ function display1() {
   promisseGetQuizzes.then(displayTheQuizzes);
 
   function displayTheQuizzes(answer) {
-    
-    //const userQuizzesSerialized = localStorage.getItem("userQuizzes");
-    //const userQuizzes = JSON.parse(userQuizzesSerialized);
-
-    // simulação do que viria do localStorage
-     let quizzExample = {
-       id: 1,
-       title: "Título do quizz",
-       image: "https://http.cat/411.jpg",
-     };
-    //let quizzExample = [];
-    const userQuizzes = [quizzExample]; //array de objetos, sendo cada objeto um quizz
-
+    const deserializedInfo = localStorage.getItem("userQuizzes");
+    const list = JSON.parse(deserializedInfo);
     let quizzes = answer.data;
     content = document.querySelector(".content");
 
-    if (userQuizzes.length === 0) {
+    if (list == null) {
       content.innerHTML = `
       <div class="display-lists">
       <div class="user-none-quizzes">
@@ -330,16 +334,18 @@ function display1() {
       let displayAllList = document.querySelector(".all-quizzes-list");
       for (let i = 0; i < quizzes.length; i++) {
         displayAllList.innerHTML += `
-        <div class="quizz q${quizzes[i].id}" onclick="display2(this)"><img src="${quizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${quizzes[i].title}</p></div>
+        <div class="quizz q${quizzes[i].id}" onclick="display2(this)">
+          <img src="${quizzes[i].image}" class="quizz-image">
+          <div class="quizz-image-gradient"></div>
+          <p>${quizzes[i].title}</p>
+        </div>
         `;
       }
-    }
-
-    if (userQuizzes.length !== 0) {
+    } else {
       content.innerHTML = `
       <div class="user-quizzes">
-        <div class="title-user-quizzes">
-          Seus Quizzes <ion-icon name="add-circle" onclick="createQuizz(this)"></ion-icon>
+        <div class="title-user-quizzes">  
+          <p>Seus Quizzes</p><button onclick="createQuizz(this)"><ion-icon name="add-circle"></ion-icon></button>
         </div>
         <div class="user-quizzes-list"></div>
       </div>
@@ -350,9 +356,13 @@ function display1() {
       `;
 
       let displayUserList = document.querySelector(".user-quizzes-list");
-      for (let i = 0; i < userQuizzes.length; i++) {
+      for (let i = 0; i < list.length; i++) {
         displayUserList.innerHTML += `
-        <div class="quizz q${userQuizzes[i].id}" onclick="display2(this)"><img src="${userQuizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${userQuizzes[i].title}</p></div>
+        <div class="quizz q${list[i].id}" onclick="display2(this)">
+          <img src="${list[i].image}" class="quizz-image">
+          <div class="quizz-image-gradient"></div>
+          <p>${list[i].title}</p>
+        </div>
         `;
       }
 
@@ -365,12 +375,7 @@ function display1() {
     }
   }
 }
-
 /* Tela 2 Página de um Quizz */
-
-let quizzSelectedObject;
-let idClicked;
-let quizzClicked;
 
 function display2(quizzClickedDiv) {
   counterFalse = 0;
@@ -392,7 +397,11 @@ function display2(quizzClickedDiv) {
     quizzSelectedObject = answer.data;
     quizzClicked = answer.data;
     content = document.querySelector(".content");
-    content.scrollIntoView({block: "start", inline: "nearest", behavior: "smooth"});
+    content.scrollIntoView({
+      block: "start",
+      inline: "nearest",
+      behavior: "smooth",
+    });
 
     content.innerHTML = `
     <div class="title-in-quizz">
@@ -423,7 +432,7 @@ function display2(quizzClickedDiv) {
       let clickedQuizzAnswersArraySort =
         clickedQuizzAnswersArray.sort(comparator);
       for (let j = 0; j < clickedQuizzAnswersArray.length; j++) {
-        if(clickedQuizzAnswersArraySort[j].isCorrectAnswer === true){
+        if (clickedQuizzAnswersArraySort[j].isCorrectAnswer === true) {
           clickedQuizzAnswersList.innerHTML += `
           <div class="answer-question-in-quizz correct-answer" onclick="calculateQuizzSuccess(this)">
             <img src="${clickedQuizzAnswersArraySort[j].image}">
@@ -431,7 +440,7 @@ function display2(quizzClickedDiv) {
           </div>
             `;
         }
-        if(clickedQuizzAnswersArraySort[j].isCorrectAnswer === false){
+        if (clickedQuizzAnswersArraySort[j].isCorrectAnswer === false) {
           clickedQuizzAnswersList.innerHTML += `
           <div class="answer-question-in-quizz incorrect-answer" onclick="calculateQuizzSuccess(this)">
             <img src="${clickedQuizzAnswersArraySort[j].image}">
@@ -443,49 +452,53 @@ function display2(quizzClickedDiv) {
     }
   }
 }
-let counterFalse = 0;
-let counterTrue = 0;
-let scrollCounter = 0;
-let counterComputedQuestions = 0;
-function calculateQuizzSuccess(answerClickedDiv){
-  if(answerClickedDiv.classList.contains('correct-answer') === true){
-    answerClickedDiv.onclick=null;
-    answerClickedDiv.classList.add('answer-question-in-quizz-true');
+function calculateQuizzSuccess(answerClickedDiv) {
+  if (answerClickedDiv.classList.contains("correct-answer") === true) {
+    answerClickedDiv.onclick = null;
+    answerClickedDiv.classList.add("answer-question-in-quizz-true");
     let divQuestionsIn = answerClickedDiv.parentNode;
-    const falseAnswersArray = divQuestionsIn.querySelectorAll('.incorrect-answer');
+    const falseAnswersArray =
+      divQuestionsIn.querySelectorAll(".incorrect-answer");
     falseAnswersArray.forEach((answer) => {
-      answer.classList.add('answer-question-in-quizz-false');
-      answer.onclick=null;
+      answer.classList.add("answer-question-in-quizz-false");
+      answer.onclick = null;
     });
     counterTrue++;
     counterComputedQuestions++;
-    divQuestionsIn.onclick=null;
+    divQuestionsIn.onclick = null;
   }
-  if(answerClickedDiv.classList.contains('incorrect-answer') === true){
-    answerClickedDiv.onclick=null;
+  if (answerClickedDiv.classList.contains("incorrect-answer") === true) {
+    answerClickedDiv.onclick = null;
     let divQuestionsIn = answerClickedDiv.parentNode;
-    const falseAnswersArray = divQuestionsIn.querySelectorAll('.incorrect-answer');
+    const falseAnswersArray =
+      divQuestionsIn.querySelectorAll(".incorrect-answer");
     falseAnswersArray.forEach((answer) => {
-      answer.classList.add('answer-question-in-quizz-false');
-      answer.onclick=null;
+      answer.classList.add("answer-question-in-quizz-false");
+      answer.onclick = null;
     });
-    answerClickedDiv.classList.add('answer-question-in-quizz-false-selected');
-    divQuestionsIn.querySelector('.correct-answer').classList.add('answer-question-in-quizz-true-nonselected');
-    divQuestionsIn.querySelector('.correct-answer').onclick=null;
+    answerClickedDiv.classList.add("answer-question-in-quizz-false-selected");
+    divQuestionsIn
+      .querySelector(".correct-answer")
+      .classList.add("answer-question-in-quizz-true-nonselected");
+    divQuestionsIn.querySelector(".correct-answer").onclick = null;
     counterFalse++;
     counterComputedQuestions++;
   }
   let questionIn = document.querySelectorAll(".question-in-quizz");
-  if(scrollCounter < questionIn.length-1){
+  if (scrollCounter < questionIn.length - 1) {
     scrollCounter++;
-    setTimeout(scrollerQuestions,2000);
-    function scrollerQuestions(){
-      questionIn[scrollCounter].scrollIntoView({block: "end", inline: "nearest", behavior: "smooth"});
+    setTimeout(scrollerQuestions, 2000);
+    function scrollerQuestions() {
+      questionIn[scrollCounter].scrollIntoView({
+        block: "end",
+        inline: "nearest",
+        behavior: "smooth",
+      });
     }
   }
-  if(counterComputedQuestions === questionIn.length){
+  if (counterComputedQuestions === questionIn.length) {
     content = document.querySelector(".content");
-    percentSucess = ((counterTrue)/(counterTrue+counterFalse))*100;
+    percentSucess = (counterTrue / (counterTrue + counterFalse)) * 100;
     percentSucessFixed = Math.round(percentSucess);
     let clickedQuizzLevelsArray = quizzClicked.levels;
     clickedQuizzLevelsArray.sort(orderMaker);
@@ -527,4 +540,8 @@ function orderMaker(lvl1,lvl2){
     return -1;
   }
   return 0;
+}
+
+function reset() {
+  window.location.reload();
 }
