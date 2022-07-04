@@ -243,14 +243,11 @@ function getLevels(j) {
   levels.push(level);
   level = {};
 }
-function getUserQuizzImg() {
-  
-}
 function sendBasicInfo() {
   const title = document.querySelector(".basic-info-title").value;
   const image = document.querySelector(".basic-info-image").value;
-  const quizCreatedScreen = document.querySelector(".sucess-image")
-  quizCreatedScreen.innerHTML = `<img src="${image}" alt="User quiz image" /><div class="success-quiz-title"><p>${title}</p></div>`
+  const quizCreatedScreen = document.querySelector(".sucess-image");
+  quizCreatedScreen.innerHTML = `<img src="${image}" alt="User quiz image" /><div class="success-quiz-title">${title}</div>`;
   for (let i = 1; i <= qtQuestions; i++) {
     getQuestions(i);
   }
@@ -284,6 +281,9 @@ function sendBasicInfo() {
       title: response.data.title,
       image: response.data.image,
     };
+    document
+      .querySelector(".sucess-button")
+      .classList.add(`q${response.data.id}`);
     userQuizzes.push(quizzInfos);
     let serializedInfo = JSON.stringify(userQuizzes);
     // Chave para pegar do localStorage: "userQuizzes", Data: serializeInfo
@@ -293,18 +293,18 @@ function sendBasicInfo() {
     console.log("Deu um erro no envio dos dados de Info Basicas");
   });
 }
-
+function showUserQuiz() {
+  document.querySelector(".quiz-success").classList.add("hidden");
+  document.querySelector(".content").classList.remove("hidden");
+}
 /*
-------------------------------------------------------------------------------------------------------------
-Podemos separar somente o código do JS com esse comentário, pode ficar mais organizado para cada um de nós.
-Mas depois quando formos entregar, a gente retira esse comentário aqui.
-Aí a partir daqui sou eu com o display e listagem, e antes seria você com a criação do quizz.
 ------------------------------------------------------------------------------------------------------------
 */
 
 /* Tela 1 Lista de Quizzes */
 function display1() {
   let content;
+  let userBannedList = [];
   let promisseGetQuizzes = axios.get(
     "https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes"
   );
@@ -313,6 +313,7 @@ function display1() {
   function displayTheQuizzes(answer) {
     const deserializedInfo = localStorage.getItem("userQuizzes");
     const list = JSON.parse(deserializedInfo);
+    let userList = list;
     let quizzes = answer.data;
     content = document.querySelector(".content");
 
@@ -365,12 +366,17 @@ function display1() {
         </div>
         `;
       }
+      for (userList of userList) {
+        userBannedList.push(userList.id);
+      }
 
       let displayAllList = document.querySelector(".all-quizzes-list");
       for (let i = 0; i < quizzes.length; i++) {
-        displayAllList.innerHTML += `
-        <div class="quizz q${quizzes[i].id}" onclick="display2(this)"><img src="${quizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div>${quizzes[i].title}</div>
-        `;
+        if (!userBannedList.includes(quizzes[i].id)) {
+          displayAllList.innerHTML += `
+          <div class="quizz q${quizzes[i].id}" onclick="display2(this)"><img src="${quizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${quizzes[i].title}</p></div>
+          `;
+        }
       }
     }
   }
@@ -382,6 +388,7 @@ function display2(quizzClickedDiv) {
   counterTrue = 0;
   scrollCounter = 0;
   counterComputedQuestions = 0;
+  console.log(quizzClickedDiv);
 
   for (let i = 0; i < 10000; i++) {
     if (quizzClickedDiv.classList.contains(`q${i}`) === true) {
@@ -502,9 +509,9 @@ function calculateQuizzSuccess(answerClickedDiv) {
     percentSucessFixed = Math.round(percentSucess);
     let clickedQuizzLevelsArray = quizzClicked.levels;
     clickedQuizzLevelsArray.sort(orderMaker);
-    let sucessContent = document.querySelector('.sucess-content');
-    for(let i=0; i<clickedQuizzLevelsArray.length; i++){
-      if(percentSucessFixed >= clickedQuizzLevelsArray[i].minValue){
+    let sucessContent = document.querySelector(".sucess-content");
+    for (let i = 0; i < clickedQuizzLevelsArray.length; i++) {
+      if (percentSucessFixed >= clickedQuizzLevelsArray[i].minValue) {
         sucessContent.innerHTML = `
         <div class="quizz-sucess-report">
           <div class="title-quizz-sucess-report">
@@ -521,9 +528,13 @@ function calculateQuizzSuccess(answerClickedDiv) {
         `;
       }
     }
-    setTimeout(scrollerSuccess,2000);
-    function scrollerSuccess(){
-      document.querySelector('.quizz-sucess-report').scrollIntoView({block: "end", inline: "nearest", behavior: "smooth"});
+    setTimeout(scrollerSuccess, 2000);
+    function scrollerSuccess() {
+      document.querySelector(".quizz-sucess-report").scrollIntoView({
+        block: "end",
+        inline: "nearest",
+        behavior: "smooth",
+      });
     }
   }
 }
@@ -532,11 +543,11 @@ function comparator() {
   return Math.random() - 0.5;
 }
 
-function orderMaker(lvl1,lvl2){
-  if(lvl1.minValue > lvl2.minValue){
+function orderMaker(lvl1, lvl2) {
+  if (lvl1.minValue > lvl2.minValue) {
     return 1;
   }
-  if(lvl1.minValue < lvl2.minValue){
+  if (lvl1.minValue < lvl2.minValue) {
     return -1;
   }
   return 0;

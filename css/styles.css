@@ -378,8 +378,8 @@ body {
   }
   .success-quiz-title {
     color: #ffffff;
-    width: 100%;
-    overflow-wrap: break-word;
+    /* width: 100%; */
+    overflow-wrap: anywhere;
     text-align: start;
     font-size: 16px;
     line-height: 22px;
@@ -394,7 +394,7 @@ body {
     display: flex;
     align-items: center;
     height: 40px;
-    margin-left: 17px;
+    margin: 0 17px;
   }
   .sucess-button button,
   .sucess-return button {
