@@ -401,6 +401,7 @@ function display2(quizzClickedDiv) {
       <div class="title-in-quizz-gradient"></div>
     </div>
     <div class="questions-in-quizz"></div>
+    <div class="sucess-content"></div>
     `;
     let clickedQuizzQuestionsArray = quizzClicked.questions;
     let clickedQuizzQuestionsList = document.querySelector(
@@ -420,7 +421,7 @@ function display2(quizzClickedDiv) {
         `.answers-question-in-quizz${i}`
       );
       let clickedQuizzAnswersArraySort =
-        clickedQuizzAnswersArray.sort(comparador);
+        clickedQuizzAnswersArray.sort(comparator);
       for (let j = 0; j < clickedQuizzAnswersArray.length; j++) {
         if(clickedQuizzAnswersArraySort[j].isCorrectAnswer === true){
           clickedQuizzAnswersList.innerHTML += `
@@ -487,20 +488,26 @@ function calculateQuizzSuccess(answerClickedDiv){
     percentSucess = ((counterTrue)/(counterTrue+counterFalse))*100;
     percentSucessFixed = Math.round(percentSucess);
     let clickedQuizzLevelsArray = quizzClicked.levels;
-    content.innerHTML += `
-    <div class="quizz-sucess-report">
-      <div class="title-quizz-sucess-report">
-        <p>${percentSucessFixed}% de acerto: ${clickedQuizzLevelsArray[1].title}</p>
-      </div>
-      <div class="description-quizz-sucess-report">
-        <img src="${clickedQuizzLevelsArray[1].image}">
-        <p>${clickedQuizzLevelsArray[1].text}</p>
-      </div>
-    </div>
+    clickedQuizzLevelsArray.sort(orderMaker);
+    let sucessContent = document.querySelector('.sucess-content');
+    for(let i=0; i<clickedQuizzLevelsArray.length; i++){
+      if(percentSucessFixed >= clickedQuizzLevelsArray[i].minValue){
+        sucessContent.innerHTML = `
+        <div class="quizz-sucess-report">
+          <div class="title-quizz-sucess-report">
+            <p>${percentSucessFixed}% de acerto: ${clickedQuizzLevelsArray[i].title}</p>
+          </div>
+          <div class="description-quizz-sucess-report">
+            <img src="${clickedQuizzLevelsArray[i].image}">
+            <p>${clickedQuizzLevelsArray[i].text}</p>
+          </div>
+        </div>
 
-    <div class="button-reset-quizz q${idClicked}" onclick="display2(this)">Reiniciar Quizz</div>
-    <div class="button-back-home" onclick="display1()">Voltar pra home</div>
-    `;
+        <div class="button-reset-quizz q${idClicked}" onclick="display2(this)">Reiniciar Quizz</div>
+        <div class="button-back-home" onclick="display1()">Voltar pra home</div>
+        `;
+      }
+    }
     setTimeout(scrollerSuccess,2000);
     function scrollerSuccess(){
       document.querySelector('.quizz-sucess-report').scrollIntoView({block: "end", inline: "nearest", behavior: "smooth"});
@@ -508,6 +515,16 @@ function calculateQuizzSuccess(answerClickedDiv){
   }
 }
 
-function comparador() {
+function comparator() {
   return Math.random() - 0.5;
+}
+
+function orderMaker(lvl1,lvl2){
+  if(lvl1.minValue > lvl2.minValue){
+    return 1;
+  }
+  if(lvl1.minValue < lvl2.minValue){
+    return -1;
+  }
+  return 0;
 }
