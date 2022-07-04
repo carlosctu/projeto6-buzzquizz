@@ -524,7 +524,8 @@ function calculateQuizzSuccess(answerClickedDiv) {
         </div>
 
         <div class="button-reset-quizz q${idClicked}" onclick="display2(this)">Reiniciar Quizz</div>
-        <div class="button-back-home" onclick="display1()">Voltar pra home</div>
+        /* Troquei display01() por reset()*/
+        <div class="button-back-home" onclick="reset()">Voltar pra home</div>
         `;
       }
     }
