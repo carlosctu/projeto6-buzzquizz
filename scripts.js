@@ -369,7 +369,7 @@ function display1() {
       let displayAllList = document.querySelector(".all-quizzes-list");
       for (let i = 0; i < quizzes.length; i++) {
         displayAllList.innerHTML += `
-        <div class="quizz q${quizzes[i].id}" onclick="display2(this)"><img src="${quizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div><p>${quizzes[i].title}</p></div>
+        <div class="quizz q${quizzes[i].id}" onclick="display2(this)"><img src="${quizzes[i].image}" class="quizz-image"><div class="quizz-image-gradient"></div>${quizzes[i].title}</div>
         `;
       }
     }
